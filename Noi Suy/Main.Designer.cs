@@ -714,7 +714,7 @@ namespace Noi_Suy
             this.exportToExcelToolStripMenuItem.Name = "exportToExcelToolStripMenuItem";
             this.exportToExcelToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.exportToExcelToolStripMenuItem.Text = "&Export to Excel ( Ctrl+ E )";
-            this.exportToExcelToolStripMenuItem.Click += new System.EventHandler(this.exportToExcelToolStripMenuItem_Click);
+            this.exportToExcelToolStripMenuItem.Click += new System.EventHandler(this.ExportToExcelToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 

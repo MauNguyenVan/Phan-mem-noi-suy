@@ -752,7 +752,7 @@ namespace Noi_Suy
             lab1.Font = new Font("Times new roman", 12);
             lab1.ForeColor = Color.ForestGreen;
             //lab1.BackColor = Color.White;
-            string txt = "This product designed by Nguyễn Văn Mậu - 2014x7- HAU";
+            string txt = "This product designed by Nguyễn Văn Mậu - 2014x7- HAU\nNgôn ngữ lập trình : C# (C Sharp)\n";
             int count = 12;
             //char[] c = txt.ToCharArray();
             int i = 0;
@@ -761,11 +761,11 @@ namespace Noi_Suy
                 lab1.Text += txt + "\n";
                 i++;
             }
-            f2.Show();
+            f2.Show(this);
         }
-        private void exportToExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportToExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Dat region = US
+            //Set region = US
             System.Globalization.CultureInfo oldCI = System.Threading.Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
@@ -974,6 +974,9 @@ namespace Noi_Suy
 
             txtName.Size = new Size(320, 150);
             txtName.Font = new Font("Times new romam", 11);
+            txtName.Anchor = AnchorStyles.Top;
+            txtName.Anchor = AnchorStyles.Right;
+            txtName.Anchor = AnchorStyles.Left; ;
             txtName.Text = Properties.Settings.Default.Name;
             txtName.Location = new Point(labName.Location.X + labName.Width + 20, labName.Location.Y);
             txtName.Focus();
@@ -1041,7 +1044,7 @@ namespace Noi_Suy
             }
             else if (e.KeyData == (Keys.Control | Keys.E))
             {
-                exportToExcelToolStripMenuItem_Click(sender, e);
+                ExportToExcelToolStripMenuItem_Click(sender, e);
             }
 
             else if (e.KeyData == (Keys.Alt | Keys.F4))

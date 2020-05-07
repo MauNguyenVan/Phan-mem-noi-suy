@@ -737,7 +737,7 @@ namespace Noi_Suy
             f2.Height = 300;
             f2.ShowIcon = false;
             f2.AutoSize = false;
-            f2.Text = "About:";
+            f2.Text = "About Nội Suy Pro";
             f2.AutoSize = false;
             f2.BackColor = Color.Black;
             f2.MaximizeBox = false;
@@ -752,7 +752,7 @@ namespace Noi_Suy
             lab1.Font = new Font("Times new roman", 12);
             lab1.ForeColor = Color.ForestGreen;
             //lab1.BackColor = Color.White;
-            string txt = "This product designed by Nguyễn Văn Mậu - 2014x7- HAU\nNgôn ngữ lập trình : C# (C Sharp)\n";
+            string txt = "Năm phát hành : 2019\nThis product designed by : Nguyễn Văn Mậu - 2014x7- HAU\nNgôn ngữ lập trình : C# (C Sharp)\n";
             int count = 12;
             //char[] c = txt.ToCharArray();
             int i = 0;

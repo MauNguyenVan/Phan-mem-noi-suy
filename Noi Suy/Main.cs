@@ -748,7 +748,6 @@ namespace Noi_Suy
             lab1.Location = new Point(30, 0);
             lab1.Width = 450;
             lab1.Height = 300;
-
             lab1.Font = new Font("Times new roman", 12);
             lab1.ForeColor = Color.ForestGreen;
             //lab1.BackColor = Color.White;

@@ -328,8 +328,6 @@ namespace Noi_Suy
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            // labAuthor.Text = "Chúc bạn làm việc hiệu quả";
-
             this.Size = Properties.Settings.Default.FormSize;
             this.Location = Properties.Settings.Default.Location;
             this.changFormSizeToolStripMenuItem.Text = this.Size != new Size() ? "Thu Nhỏ" : "Mở Rộng";//chưa làm được

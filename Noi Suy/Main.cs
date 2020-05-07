@@ -422,7 +422,6 @@ namespace Noi_Suy
             catch { }
 
         }
-
         private void dgvKQ_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try

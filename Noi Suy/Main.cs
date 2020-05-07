@@ -728,7 +728,6 @@ namespace Noi_Suy
             countClick = 1;
             this.Text = "PHẦN MỀM TÍNH NỘI SUY Pro";
             GC.Collect();
-
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {

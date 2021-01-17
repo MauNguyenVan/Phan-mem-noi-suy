@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-namespace Noi_Suy
+namespace NoiSuy
 { 
     partial class frmMain
     {

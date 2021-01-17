@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D80B0D70-C7FA-48B5-B459-18F553F70408}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Noi_Suy</RootNamespace>
+    <RootNamespace>NoiSuy</RootNamespace>
     <AssemblyName>Noi Suy</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>

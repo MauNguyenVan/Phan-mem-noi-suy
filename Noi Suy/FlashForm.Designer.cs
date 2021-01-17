@@ -1,4 +1,4 @@
-﻿namespace Noi_Suy
+﻿namespace NoiSuy
 {
     partial class frmFlashScreen
     {

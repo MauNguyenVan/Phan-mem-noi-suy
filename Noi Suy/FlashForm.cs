@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Noi_Suy
+namespace NoiSuy
 {
     public partial class frmFlashScreen : Form
     {

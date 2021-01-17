@@ -14,7 +14,7 @@ using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
-namespace Noi_Suy
+namespace NoiSuy
 {
     public partial class frmMain : Form
     {
@@ -218,8 +218,8 @@ namespace Noi_Suy
 
             }
 
-            Noi_Suy.Properties.Settings.Default.urlPic = openPic.FileName;
-            Noi_Suy.Properties.Settings.Default.Save();
+            NoiSuy.Properties.Settings.Default.urlPic = openPic.FileName;
+            NoiSuy.Properties.Settings.Default.Save();
 
         }
 
@@ -337,7 +337,7 @@ namespace Noi_Suy
             labAuthor.ForeColor = Color.White;
             try
             {
-                pictureBox1.Image = Image.FromFile(Noi_Suy.Properties.Settings.Default.urlPic);
+                pictureBox1.Image = Image.FromFile(NoiSuy.Properties.Settings.Default.urlPic);
             }
             catch
             {

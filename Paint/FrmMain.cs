@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using System.Drawing;
-
 using Paint.DataClass;
 
 namespace Paint
@@ -32,16 +30,11 @@ namespace Paint
 
         private void pnPaint_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             switch (paintType)
             {
                 case PaintTypeEnumeration.Line:
-                    Line line = new Line(100, 100, i, 110);
-                    lines.Add(line);
-                    foreach (var item in lines)
-                    {
-                        graphics.DrawLine(pen, item.X1, item.Y1, item.X2, item.Y2);
-                    }
-
+                    graphics.DrawLine(pen, line.Start, line.End);
                     break;
 
                 case PaintTypeEnumeration.Rectangle:
@@ -64,11 +57,11 @@ namespace Paint
 
         private void btnLine_Click(object sender, EventArgs e)
         {
-            i += 500;
+            this.pnPaint.Invalidate();
             paintType = PaintTypeEnumeration.Line;
 
-            this.pnPaint.Invalidate();
-            this.Text = Line.Count.ToString();
+           
+
         }
 
         private void btnColor_Click(object sender, EventArgs e)
@@ -89,7 +82,25 @@ namespace Paint
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            graphics.Clear();
+            // graphics.Clear();
+        }
+        Line line = new Line();
+        private void pnPaint_MouseDown(object sender, MouseEventArgs e)
+        {
+            line.Start = e.Location;
+           // this.pnPaint.Invalidate();
+        }
+
+        private void pnPaint_MouseUp(object sender, MouseEventArgs e)
+        {
+            line.End = e.Location;
+            //this.pnPaint.Invalidate();
+        }
+
+        private void pnPaint_MouseMove(object sender, MouseEventArgs e)
+        {
+            line.End = e.Location;
+            this.pnPaint.Invalidate();
         }
     }
 }

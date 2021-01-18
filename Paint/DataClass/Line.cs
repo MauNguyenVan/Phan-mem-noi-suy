@@ -1,27 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Text;
 
 namespace Paint.DataClass
 {
-  internal  class Line
+    internal class Line : Shape
     {
-        public int X1 { get; set; }
-        public int Y1 { get; set; }
-        public int X2 { get; set; }
-        public int Y2 { get; set; }
-        public static int Count { get; private set; } = default;
-        internal Line(int x1, int y1, int x2, int y2)
+        public Line()
         {
-            this.X1 = x1;
-            this.Y1 = y1;
-            this.X2 = x2;
-            this.Y2 = y2;
-            Count++;
+            this.Name = PaintTypeEnumeration.Line.ToString();
         }
-        ~Line()
+
+        protected override GraphicsPath GraphicsPath
         {
-            Count--;
+            get
+            {
+                GraphicsPath graphicsPath = new GraphicsPath();
+                graphicsPath.AddLine(this.Start, this.End);
+                return graphicsPath;
+            }
+        }
+
+        public override object Clone()
+        {
+            return new Line()
+            {
+                Name = Name,
+                Start = Start,
+                End = End,
+                LineWidth = LineWidth,
+                Color = Color,
+                IsSelected = IsSelected,
+            };
+        }
+
+        public override void Draw(Graphics graphics)
+        {
+            using GraphicsPath graphicPath = GraphicsPath;
+            using Pen pen = new Pen(Color, LineWidth)
+            {
+                DashStyle = this.DashStyle,
+            };
+            graphics.DrawPath(pen,graphicPath);
+        }
+
+        public override bool IsHit(Point point)
+        {
+            bool res = false;
+            using GraphicsPath graphicPath = GraphicsPath;
+            using Pen pen = new Pen(Color, LineWidth + 3);
+            res = graphicPath.IsOutlineVisible(point, pen);
+            return res;
+        }
+
+        public override void Move(Point distance)
+        {
+            this.Start = new Point(Start.X + distance.X, Start.Y + distance.Y);
+            this.End = new Point(End.X + distance.X, End.Y + distance.Y);
+
         }
     }
 }

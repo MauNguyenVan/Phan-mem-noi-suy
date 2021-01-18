@@ -766,8 +766,8 @@ namespace NoiSuy
 
             Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
             Excel._Workbook wb = app.Workbooks.Add(Type.Missing);
-            Excel._Worksheet ws = null;
-            ws = (Excel.Worksheet)wb.Worksheets["Sheet1"];
+            Excel._Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Sheets[1]; ;
+           
             try
             {
                 SaveFileDialog saveDialog = new SaveFileDialog();

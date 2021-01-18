@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Paint.DataClass
 {
-    class UtilStatic
-    {
-        public static Line Lines { get; set; } = default;
-    }
+    //class UtilStatic
+    //{
+    //    public static Line Lines { get; set; } = default;
+    //}
 }

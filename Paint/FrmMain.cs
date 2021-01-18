@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using System.Drawing;
+
 using Paint.DataClass;
 
 namespace Paint
@@ -19,7 +21,8 @@ namespace Paint
         private Pen pen;
         private Color color;
         private List<Line> lines = new List<Line>();
-        int i=1000;
+        private int i = 1000;
+
         public FrmMain()
         {
             InitializeComponent();
@@ -32,20 +35,26 @@ namespace Paint
             switch (paintType)
             {
                 case PaintTypeEnumeration.Line:
-                   Line line = new Line(100, 100, i, 110);
+                    Line line = new Line(100, 100, i, 110);
                     lines.Add(line);
-                    graphics.DrawLine(pen, line.X1, line.Y1, line.X2, line.Y2);
-                   
+                    foreach (var item in lines)
+                    {
+                        graphics.DrawLine(pen, item.X1, item.Y1, item.X2, item.Y2);
+                    }
+
                     break;
+
                 case PaintTypeEnumeration.Rectangle:
                     break;
+
                 case PaintTypeEnumeration.Circle:
                     break;
-              
+
                 default:
                     break;
             }
-                      
+            graphics.Flush();
+            //  graphics.Dispose();
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -55,7 +64,7 @@ namespace Paint
 
         private void btnLine_Click(object sender, EventArgs e)
         {
-            i += 100;
+            i += 500;
             paintType = PaintTypeEnumeration.Line;
 
             this.pnPaint.Invalidate();
@@ -66,16 +75,21 @@ namespace Paint
         {
             colorDialog.AllowFullOpen = true;
             colorDialog.FullOpen = true;
-          if(  colorDialog.ShowDialog()==DialogResult.OK)
+            if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 color = colorDialog.Color;
                 UpdatePenColor();
             }
-
         }
+
         private void UpdatePenColor()
         {
             pen.Color = color;
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            graphics.Clear();
         }
     }
 }

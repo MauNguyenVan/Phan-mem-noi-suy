@@ -31,10 +31,11 @@ namespace Paint
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnPaint = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnColor = new System.Windows.Forms.Button();
             this.btnLine = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnColor = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -64,18 +65,9 @@ namespace Paint
             this.pnPaint.TabIndex = 0;
             this.pnPaint.Paint += new System.Windows.Forms.PaintEventHandler(this.pnPaint_Paint);
             // 
-            // btnLine
-            // 
-            this.btnLine.Location = new System.Drawing.Point(0, 0);
-            this.btnLine.Name = "btnLine";
-            this.btnLine.Size = new System.Drawing.Size(75, 23);
-            this.btnLine.TabIndex = 1;
-            this.btnLine.Text = "Line";
-            this.btnLine.UseVisualStyleBackColor = true;
-            this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
-            // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnClear);
             this.panel1.Controls.Add(this.btnColor);
             this.panel1.Controls.Add(this.btnLine);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -83,6 +75,16 @@ namespace Paint
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(792, 76);
             this.panel1.TabIndex = 1;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(162, 0);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 3;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnColor
             // 
@@ -93,6 +95,16 @@ namespace Paint
             this.btnColor.Text = "Color";
             this.btnColor.UseVisualStyleBackColor = true;
             this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
+            // 
+            // btnLine
+            // 
+            this.btnLine.Location = new System.Drawing.Point(0, 0);
+            this.btnLine.Name = "btnLine";
+            this.btnLine.Size = new System.Drawing.Size(75, 23);
+            this.btnLine.TabIndex = 1;
+            this.btnLine.Text = "Line";
+            this.btnLine.UseVisualStyleBackColor = true;
+            this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
             // 
             // FrmMain
             // 
@@ -117,6 +129,7 @@ namespace Paint
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnColor;
         private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 

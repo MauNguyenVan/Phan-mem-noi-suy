@@ -17,7 +17,8 @@ namespace Paint
         private PaintTypeEnumeration paintType;
         private Graphics graphics = default;
         private Pen pen;
-        private Color color;
+        private Brush brush;
+        private Color color = Color.Black;
         private List<Line> lines = new List<Line>();
         private Line line;
         private Point startPoint, endPoint;
@@ -30,9 +31,10 @@ namespace Paint
         private void FrmMain_Load(object sender, EventArgs e)
         {
             paintType = PaintTypeEnumeration.None;
-
+            this.WindowState = FormWindowState.Maximized;
+            pen = new Pen(color);
             graphics = pnPaint.CreateGraphics();
-            pen = new Pen(Color.Black);
+
         }
 
         private void pnPaint_Paint(object sender, PaintEventArgs e)
@@ -46,7 +48,32 @@ namespace Paint
                     {
                         pen.Color = ln.Color;
                         pen.Width = ln.LineWidth;
-                        graphics.DrawLine(pen, ln.Start, ln.End);
+                        if (ln.IsSelected)
+                        {
+                            Pen newPen = new Pen(Color.YellowGreen, ln.LineWidth + 3);
+
+                            SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
+                            graphics.DrawLine(newPen, ln.Start, ln.End);
+                            //Caculator center of Circle
+                            int minRadius = ln.LineWidth<=3?3:(int)(0.5 * ln.LineWidth);
+                            DrawCircle(graphics, newSolidBrush, ln.Start, minRadius);
+                            DrawCircle(graphics, newSolidBrush, ln.End, minRadius);
+
+                            static void DrawCircle(Graphics graphics, SolidBrush solidBrush, Point point, int radius)
+                            {
+                                Point startP = new Point(point.X - radius, point.Y - radius);
+                                //   Point endP = new Point(point.X + radius, point.Y + radius);
+                                Size size = new Size(2*radius, 2* radius);
+                                Rectangle rectangle = new Rectangle(startP,size );
+                                graphics.FillEllipse(solidBrush,rectangle);
+                               
+                            }
+                        }
+                        else
+                        {
+                            graphics.DrawLine(pen, ln.Start, ln.End);
+
+                        }
                     }
 
                     break;
@@ -60,7 +87,7 @@ namespace Paint
                 default:
                     break;
             }
-            graphics.Flush();
+           // graphics.Flush();
             //  graphics.Dispose();
             lsbElement.Items.Clear();
             lsbElement.Items.AddRange(lines.ToArray());
@@ -79,6 +106,8 @@ namespace Paint
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 color = colorDialog.Color;
+               // btnColor.BackColor = color;
+                btnColor.ForeColor = color;
                 UpdatePenColor();
             }
         }
@@ -117,7 +146,8 @@ namespace Paint
                 endPoint = e.Location;
                 if (paintType == PaintTypeEnumeration.Line)
                 {
-                    line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value));
+                    line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value))
+                    { IsSelected = false };
                     lines.Add(line);
                     this.pnPaint.Invalidate();
                 }
@@ -141,12 +171,19 @@ namespace Paint
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            //this.Text = lsbElement.SelectedItem.ToString();
-            var selectedItems = lsbElement.SelectedItems;
+            Delete();
+           
+        }
+
+        private void Delete()
+        {
+            ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
+            int selectedIndex = lsbElement.SelectedIndex;
             if (lsbElement.SelectedIndex != -1)
             {
-                for (int i = selectedItems.Count - 1; i >= 0; i--)
+                for (int i = selectedIndex; i < selectedItems.Count; i++)
                 {
+                    MessageBox.Show(lsbElement.SelectedIndex.ToString(), i.ToString());
                     lsbElement.Items.RemoveAt(i);
                     lines.RemoveAt(i);
                 }
@@ -157,14 +194,43 @@ namespace Paint
 
             this.pnPaint.Invalidate();
         }
-
         private void btnNone_Click(object sender, EventArgs e)
         {
             paintType = PaintTypeEnumeration.None;
+          //  this.pnPaint.Invalidate();
+        }
+
+        private void lsbElement_DoubleClick(object sender, EventArgs e)
+        {
+            Delete();
         }
 
         private void lsbElement_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
+            int selectedIndex = lsbElement.SelectedIndex;
+            if (lsbElement.SelectedIndex != -1)
+            {
+                //for (int i = selectedIndex; i < selectedItems.Count; i++)
+                //{
+                //    lines[i].IsSelected = true;
+                //}
+                for (int i = 0; i < lsbElement.Items.Count; i++)
+                {
+                    if (i >= selectedIndex && i < selectedIndex + selectedItems.Count)
+                    {
+                        lines[i].IsSelected = true;
+                    }
+                    else
+                    {
+                        lines[i].IsSelected = false;
+
+                    }
+                }
+                pnPaint.Invalidate();
+            }
+            
         }
     }
 }

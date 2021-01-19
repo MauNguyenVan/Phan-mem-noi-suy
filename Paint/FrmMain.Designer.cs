@@ -32,6 +32,7 @@ namespace Paint
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnPaint = new System.Windows.Forms.Panel();
             this.pnRibbon = new System.Windows.Forms.Panel();
+            this.btnNone = new System.Windows.Forms.Button();
             this.numLightWidth = new System.Windows.Forms.NumericUpDown();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnColor = new System.Windows.Forms.Button();
@@ -40,7 +41,6 @@ namespace Paint
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.btnNone = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnRibbon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numLightWidth)).BeginInit();
@@ -93,6 +93,16 @@ namespace Paint
             this.pnRibbon.Name = "pnRibbon";
             this.pnRibbon.Size = new System.Drawing.Size(698, 94);
             this.pnRibbon.TabIndex = 1;
+            // 
+            // btnNone
+            // 
+            this.btnNone.Location = new System.Drawing.Point(0, 29);
+            this.btnNone.Name = "btnNone";
+            this.btnNone.Size = new System.Drawing.Size(75, 23);
+            this.btnNone.TabIndex = 5;
+            this.btnNone.Text = "None";
+            this.btnNone.UseVisualStyleBackColor = true;
+            this.btnNone.Click += new System.EventHandler(this.btnNone_Click);
             // 
             // numLightWidth
             // 
@@ -152,6 +162,7 @@ namespace Paint
             this.lsbElement.Size = new System.Drawing.Size(144, 374);
             this.lsbElement.TabIndex = 2;
             this.lsbElement.SelectedIndexChanged += new System.EventHandler(this.lsbElement_SelectedIndexChanged);
+            this.lsbElement.DoubleClick += new System.EventHandler(this.lsbElement_DoubleClick);
             // 
             // panel1
             // 
@@ -171,16 +182,6 @@ namespace Paint
             this.button1.Text = "Delete";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnNone
-            // 
-            this.btnNone.Location = new System.Drawing.Point(0, 29);
-            this.btnNone.Name = "btnNone";
-            this.btnNone.Size = new System.Drawing.Size(75, 23);
-            this.btnNone.TabIndex = 5;
-            this.btnNone.Text = "None";
-            this.btnNone.UseVisualStyleBackColor = true;
-            this.btnNone.Click += new System.EventHandler(this.btnNone_Click);
             // 
             // FrmMain
             // 

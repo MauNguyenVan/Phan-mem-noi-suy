@@ -115,19 +115,17 @@ namespace Paint
             if (e.Button == MouseButtons.Left)
             {
                 endPoint = e.Location;
-                line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value));
-                lines.Add(line);
-                this.pnPaint.Invalidate();
+                if (paintType == PaintTypeEnumeration.Line)
+                {
+                    line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value));
+                    lines.Add(line);
+                    this.pnPaint.Invalidate();
+                }
             }
             else if (e.Button == MouseButtons.Middle)
             {
                 pnPaint.Cursor = Cursors.Default;
             }
-        }
-
-        private void pnPaint_Resize(object sender, EventArgs e)
-        {
-            pnPaint.CreateGraphics();
         }
 
         private void pnPaint_MouseMove(object sender, MouseEventArgs e)
@@ -136,23 +134,33 @@ namespace Paint
             //   this.pnPaint.Invalidate();
         }
 
+        private void pnPaint_Resize(object sender, EventArgs e)
+        {
+            pnPaint.CreateGraphics();
+        }
+
         private void btnDelete_Click(object sender, EventArgs e)
         {
             //this.Text = lsbElement.SelectedItem.ToString();
-            var index = lsbElement.SelectedIndices;
-            MessageBox.Show(index.Count.ToString());
-            if (index.Count >= 0)
+            var selectedItems = lsbElement.SelectedItems;
+            if (lsbElement.SelectedIndex != -1)
             {
-                foreach (var item in index)
+                for (int i = selectedItems.Count - 1; i >= 0; i--)
                 {
-                    // lines.Remove();
+                    lsbElement.Items.RemoveAt(i);
+                    lines.RemoveAt(i);
                 }
-
-                lsbElement.Items.Clear();
-                lsbElement.Items.AddRange(lines.ToArray());
             }
 
+            lsbElement.Items.Clear();
+            lsbElement.Items.AddRange(lines.ToArray());
+
             this.pnPaint.Invalidate();
+        }
+
+        private void btnNone_Click(object sender, EventArgs e)
+        {
+            paintType = PaintTypeEnumeration.None;
         }
 
         private void lsbElement_SelectedIndexChanged(object sender, EventArgs e)

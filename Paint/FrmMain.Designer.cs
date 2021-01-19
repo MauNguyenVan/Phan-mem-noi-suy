@@ -40,6 +40,7 @@ namespace Paint
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.btnNone = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnRibbon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numLightWidth)).BeginInit();
@@ -82,6 +83,7 @@ namespace Paint
             // pnRibbon
             // 
             this.pnRibbon.BackColor = System.Drawing.SystemColors.Control;
+            this.pnRibbon.Controls.Add(this.btnNone);
             this.pnRibbon.Controls.Add(this.numLightWidth);
             this.pnRibbon.Controls.Add(this.btnClear);
             this.pnRibbon.Controls.Add(this.btnColor);
@@ -170,6 +172,16 @@ namespace Paint
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // btnNone
+            // 
+            this.btnNone.Location = new System.Drawing.Point(0, 29);
+            this.btnNone.Name = "btnNone";
+            this.btnNone.Size = new System.Drawing.Size(75, 23);
+            this.btnNone.TabIndex = 5;
+            this.btnNone.Text = "None";
+            this.btnNone.UseVisualStyleBackColor = true;
+            this.btnNone.Click += new System.EventHandler(this.btnNone_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -200,6 +212,7 @@ namespace Paint
         private System.Windows.Forms.ListBox lsbElement;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnNone;
     }
 }
 

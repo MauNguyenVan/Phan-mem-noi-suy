@@ -41,6 +41,7 @@ namespace Paint
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.cbxLineType = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnRibbon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numLightWidth)).BeginInit();
@@ -83,6 +84,7 @@ namespace Paint
             // pnRibbon
             // 
             this.pnRibbon.BackColor = System.Drawing.SystemColors.Control;
+            this.pnRibbon.Controls.Add(this.cbxLineType);
             this.pnRibbon.Controls.Add(this.btnNone);
             this.pnRibbon.Controls.Add(this.numLightWidth);
             this.pnRibbon.Controls.Add(this.btnClear);
@@ -183,6 +185,15 @@ namespace Paint
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // cbxLineType
+            // 
+            this.cbxLineType.FormattingEnabled = true;
+            this.cbxLineType.Location = new System.Drawing.Point(297, 34);
+            this.cbxLineType.Name = "cbxLineType";
+            this.cbxLineType.Size = new System.Drawing.Size(116, 23);
+            this.cbxLineType.TabIndex = 6;
+            this.cbxLineType.SelectedIndexChanged += new System.EventHandler(this.cbxLineType_SelectedIndexChanged);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -214,6 +225,7 @@ namespace Paint
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnNone;
+        private System.Windows.Forms.ComboBox cbxLineType;
     }
 }
 

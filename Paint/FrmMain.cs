@@ -19,11 +19,18 @@ namespace Paint
         private Pen pen;
         private Color color;
         private List<Line> lines = new List<Line>();
-        private int i = 1000;
+        private Line line;
+        private Point startPoint, endPoint;
 
         public FrmMain()
         {
             InitializeComponent();
+        }
+
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+            paintType = PaintTypeEnumeration.None;
+
             graphics = pnPaint.CreateGraphics();
             pen = new Pen(Color.Black);
         }
@@ -34,7 +41,14 @@ namespace Paint
             switch (paintType)
             {
                 case PaintTypeEnumeration.Line:
-                    graphics.DrawLine(pen, line.Start, line.End);
+                    //graphics.DrawLine(pen, startPoint, endPoint);
+                    foreach (var ln in lines)
+                    {
+                        pen.Color = ln.Color;
+                        pen.Width = ln.LineWidth;
+                        graphics.DrawLine(pen, ln.Start, ln.End);
+                    }
+
                     break;
 
                 case PaintTypeEnumeration.Rectangle:
@@ -48,20 +62,14 @@ namespace Paint
             }
             graphics.Flush();
             //  graphics.Dispose();
-        }
-
-        private void FrmMain_Load(object sender, EventArgs e)
-        {
-            paintType = PaintTypeEnumeration.None;
+            lsbElement.Items.Clear();
+            lsbElement.Items.AddRange(lines.ToArray());
         }
 
         private void btnLine_Click(object sender, EventArgs e)
         {
             this.pnPaint.Invalidate();
             paintType = PaintTypeEnumeration.Line;
-
-           
-
         }
 
         private void btnColor_Click(object sender, EventArgs e)
@@ -82,25 +90,73 @@ namespace Paint
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            // graphics.Clear();
+            graphics.Clear(pnPaint.BackColor);
+            lines.Clear();
+            lsbElement.Items.Clear();
         }
-        Line line = new Line();
+
         private void pnPaint_MouseDown(object sender, MouseEventArgs e)
         {
-            line.Start = e.Location;
-           // this.pnPaint.Invalidate();
+            if (e.Button == MouseButtons.Left)
+            {
+                startPoint = e.Location;
+                pnPaint.Cursor = Cursors.Default;
+            }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                pnPaint.Cursor = Cursors.SizeAll;
+            }
+
+            // this.pnPaint.Invalidate();
         }
 
         private void pnPaint_MouseUp(object sender, MouseEventArgs e)
         {
-            line.End = e.Location;
-            //this.pnPaint.Invalidate();
+            if (e.Button == MouseButtons.Left)
+            {
+                endPoint = e.Location;
+                line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value));
+                lines.Add(line);
+                this.pnPaint.Invalidate();
+            }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                pnPaint.Cursor = Cursors.Default;
+            }
+        }
+
+        private void pnPaint_Resize(object sender, EventArgs e)
+        {
+            pnPaint.CreateGraphics();
         }
 
         private void pnPaint_MouseMove(object sender, MouseEventArgs e)
         {
-            line.End = e.Location;
+            endPoint = e.Location;
+            //   this.pnPaint.Invalidate();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            //this.Text = lsbElement.SelectedItem.ToString();
+            var index = lsbElement.SelectedIndices;
+            MessageBox.Show(index.Count.ToString());
+            if (index.Count >= 0)
+            {
+                foreach (var item in index)
+                {
+                    // lines.Remove();
+                }
+
+                lsbElement.Items.Clear();
+                lsbElement.Items.AddRange(lines.ToArray());
+            }
+
             this.pnPaint.Invalidate();
+        }
+
+        private void lsbElement_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
     }
 }

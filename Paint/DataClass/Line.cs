@@ -13,6 +13,15 @@ namespace Paint.DataClass
             this.Name = PaintTypeEnumeration.Line.ToString();
         }
 
+        public Line(Point start, Point end, Color color, int lineWidth)
+        {
+            this.Name = PaintTypeEnumeration.Line.ToString();
+            this.Start = start;
+            this.End = end;
+            this.Color = color;
+            this.LineWidth = lineWidth;
+        }
+
         protected override GraphicsPath GraphicsPath
         {
             get
@@ -43,7 +52,7 @@ namespace Paint.DataClass
             {
                 DashStyle = this.DashStyle,
             };
-            graphics.DrawPath(pen,graphicPath);
+            graphics.DrawPath(pen, graphicPath);
         }
 
         public override bool IsHit(Point point)
@@ -59,7 +68,6 @@ namespace Paint.DataClass
         {
             this.Start = new Point(Start.X + distance.X, Start.Y + distance.Y);
             this.End = new Point(End.X + distance.X, End.Y + distance.Y);
-
         }
     }
 }

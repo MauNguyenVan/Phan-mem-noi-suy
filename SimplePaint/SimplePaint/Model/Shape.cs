@@ -15,8 +15,11 @@ namespace SimplePaint.Model
         public DashStyle DashStyle { get; set; } = DashStyle.Solid;
 
         protected abstract GraphicsPath GraphicsPath { get; }
+
         public abstract bool IsHit(Point point);
+
         public abstract void Draw(Graphics graphics);
+
         public abstract void Move(Point distance);
 
         public abstract object Clone();

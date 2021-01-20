@@ -50,39 +50,15 @@ namespace Paint
             switch (paintType)
             {
                 case PaintTypeEnumeration.Line:
+
                     //graphics.DrawLine(pen, startPoint, endPoint);
                     foreach (var ln in lines)
                     {
                         pen.Color = ln.Color;
                         pen.Width = ln.LineWidth;
-                        if (ln.IsSelected)
-                        {
-                            Pen newPen = new Pen(Color.YellowGreen, ln.LineWidth + 3)
-                            {
-                                DashStyle = ln.DashStyle
-                            };
+                        pen.DashStyle = ln.DashStyle;
 
-                            SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
-                            graphics.DrawLine(newPen, ln.Start, ln.End);
-                            //Caculator center of Circle
-                            int minRadius = ln.LineWidth <= 3 ? 3 : ln.LineWidth;
-                            DrawSquare(graphics, newSolidBrush, ln.Start, minRadius);
-                            DrawSquare(graphics, newSolidBrush, ln.End, minRadius);
-
-                            static void DrawSquare(Graphics graphics, SolidBrush solidBrush, Point point, int width)
-                            {
-                                Point startP = new Point(point.X - (int)(0.5 * width), point.Y - (int)(0.5 * width));
-                                //   Point endP = new Point(point.X + radius, point.Y + radius);
-                                Size size = new Size(width, width);
-                                Rectangle rectangle = new Rectangle(startP, size);
-                                graphics.FillRectangle(solidBrush, rectangle);
-                            }
-                        }
-                        else
-                        {
-                            pen.DashStyle = ln.DashStyle;
-                            graphics.DrawLine(pen, ln.Start, ln.End);
-                        }
+                        ln.Draw(graphics);
                     }
 
                     break;
@@ -245,6 +221,8 @@ namespace Paint
                 }
                 pnPaint.Invalidate();
             }
+            lsbElement.Focus();
+            // lsbElement.SelectedIndex = 1;
         }
     }
 }

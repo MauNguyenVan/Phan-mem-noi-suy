@@ -8,6 +8,9 @@ namespace Paint.DataClass
 {
     internal class Line : Shape
     {
+        public Point Middle { get; set; }
+        public double Length { get; set; }
+
         public Line()
         {
             this.Name = PaintTypeEnumeration.Line.ToString();
@@ -20,6 +23,7 @@ namespace Paint.DataClass
             this.End = end;
             this.Color = color;
             this.LineWidth = lineWidth;
+            Middle = GetMiddlePoint();
         }
 
         protected override GraphicsPath GraphicsPath
@@ -48,11 +52,34 @@ namespace Paint.DataClass
         public override void Draw(Graphics graphics)
         {
             using GraphicsPath graphicPath = GraphicsPath;
-            using Pen pen = new Pen(Color, LineWidth)
+
+            if (IsSelected)
             {
-                DashStyle = this.DashStyle,
-            };
-            graphics.DrawPath(pen, graphicPath);
+                int minSize = LineWidth <= 3 ? 3 : LineWidth + 2;
+                using Pen pen = new Pen(Color.Yellow, minSize)
+                {
+                    DashStyle = this.DashStyle,
+                };
+                SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
+                graphics.DrawPath(pen, graphicPath);
+                Square square = new Square();
+                square.SolidBrush = newSolidBrush;
+                square.DrawFromCenter(graphics, Start, 6);
+                square.DrawFromCenter(graphics, End, 6);
+                square.DrawFromCenter(graphics, Middle, 6);
+                Textx txtS = new Textx(graphics, Start, Start.ToString(), GetAngleLine());
+                Textx txtE = new Textx(graphics, End, End.ToString(), GetAngleLine());
+                //Textx txtM = new Textx(graphics, Middle, Middle.ToString(), GetAngleLine());
+                Textx txtL = new Textx(graphics, Middle, $"Length={ GetLengthLine()}; Angle ={GetAngleLine()}", GetAngleLine());
+            }
+            else
+            {
+                using Pen pen = new Pen(Color, LineWidth)
+                {
+                    DashStyle = this.DashStyle,
+                };
+                graphics.DrawPath(pen, graphicPath);
+            }
         }
 
         public override bool IsHit(Point point)
@@ -68,6 +95,43 @@ namespace Paint.DataClass
         {
             this.Start = new Point(Start.X + distance.X, Start.Y + distance.Y);
             this.End = new Point(End.X + distance.X, End.Y + distance.Y);
+        }
+
+        public static float GetAngleTwoPoint(PointF p1, PointF p2)
+        {
+            float xDiff = p2.X - p1.X;
+            float yDiff = p2.Y - p1.Y;
+            return (float)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
+        }
+
+        public static float GetLenghtTwoPoint(PointF p1, PointF p2)
+        {
+            float xDiff = p2.X - p1.X;
+            float yDiff = p2.Y - p1.Y;
+            return (float)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
+        }
+
+        public float GetAngleLine()
+        {
+            Point p1 = this.Start;
+            Point p2 = this.End;
+            float xDiff = p2.X - p1.X;
+            float yDiff = p2.Y - p1.Y;
+            return (float)(Math.Atan2(yDiff, xDiff) * (180 / Math.PI));
+        }
+
+        private Point GetMiddlePoint()
+        {
+            int middleX = (int)(0.5 * (this.Start.X + this.End.X));
+            int middleY = (int)(0.5 * (this.Start.Y + this.End.Y));
+            return new Point(middleX, middleY);
+        }
+
+        private double GetLengthLine()
+        {
+            double x2 = Math.Pow(this.End.X - this.Start.X, 2);
+            double y2 = Math.Pow(this.End.Y - this.Start.Y, 2);
+            return Math.Sqrt(x2 + y2);
         }
     }
 }

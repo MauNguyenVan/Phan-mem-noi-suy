@@ -200,29 +200,46 @@ namespace Paint
 
         private void lsbElement_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
-            int selectedIndex = lsbElement.SelectedIndex;
-            if (lsbElement.SelectedIndex != -1)
+            int j = 1;
+            if (SelectListBox(ref j))
             {
-                //for (int i = selectedIndex; i < selectedItems.Count; i++)
-                //{
-                //    lines[i].IsSelected = true;
-                //}
-                for (int i = 0; i < lsbElement.Items.Count; i++)
+                ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
+                int selectedIndex = lsbElement.SelectedIndex;
+                if (lsbElement.SelectedIndex != -1)
                 {
-                    if (i >= selectedIndex && i < selectedIndex + selectedItems.Count)
+                    //for (int i = selectedIndex; i < selectedItems.Count; i++)
+                    //{
+                    //    lines[i].IsSelected = true;
+                    //}
+                    for (int i = 0; i < lsbElement.Items.Count; i++)
                     {
-                        lines[i].IsSelected = true;
+                        if (i >= selectedIndex && i < selectedIndex + selectedItems.Count)
+                        {
+                            lines[i].IsSelected = true;
+                        }
+                        else
+                        {
+                            lines[i].IsSelected = false;
+                        }
                     }
-                    else
-                    {
-                        lines[i].IsSelected = false;
-                    }
+
+                    pnPaint.Invalidate();
                 }
-                pnPaint.Invalidate();
+                lsbElement.SelectedIndex = 1;
             }
-            lsbElement.Focus();
-            // lsbElement.SelectedIndex = 1;
+        }
+
+        private bool SelectListBox(ref int i)
+        {
+            if (i == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            i++;
         }
     }
 }

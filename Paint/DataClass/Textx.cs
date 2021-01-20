@@ -40,7 +40,6 @@ namespace Paint.DataClass
             // Graphics.RotateTransform(TextAngle);
             // Graphics.TranslateTransform(Point.X, Point.Y);
             Graphics.DrawString(Content, Font, SolidBrush, Point, stringFormat);
-
             Graphics.ResetTransform();
             Font.Dispose();
             SolidBrush.Dispose();

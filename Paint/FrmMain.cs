@@ -17,8 +17,10 @@ namespace Paint
         private PaintTypeEnumeration paintType;
         private Graphics graphics = default;
         private Pen pen;
-       // private Brush brush;
+
+        // private Brush brush;
         private Color color = Color.Black;
+
         private List<Line> lines = new List<Line>();
         private Line line;
         private Point startPoint, endPoint;
@@ -27,7 +29,7 @@ namespace Paint
         {
             InitializeComponent();
             pen = new Pen(color);
-        
+
             foreach (string style in Enum.GetNames(typeof(DashStyle)))
             {
                 cbxLineType.Items.Add(style);
@@ -38,9 +40,8 @@ namespace Paint
         {
             paintType = PaintTypeEnumeration.None;
             this.WindowState = FormWindowState.Maximized;
-            
-            graphics = pnPaint.CreateGraphics();
 
+            graphics = pnPaint.CreateGraphics();
         }
 
         private void pnPaint_Paint(object sender, PaintEventArgs e)
@@ -57,31 +58,30 @@ namespace Paint
                         if (ln.IsSelected)
                         {
                             Pen newPen = new Pen(Color.YellowGreen, ln.LineWidth + 3)
-                            { DashStyle = ln.DashStyle 
+                            {
+                                DashStyle = ln.DashStyle
                             };
 
                             SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
                             graphics.DrawLine(newPen, ln.Start, ln.End);
                             //Caculator center of Circle
-                            int minRadius = ln.LineWidth<=3?3:(int)(0.5 * ln.LineWidth);
-                            DrawRectangle(graphics, newSolidBrush, ln.Start, minRadius);
-                            DrawRectangle(graphics, newSolidBrush, ln.End, minRadius);
+                            int minRadius = ln.LineWidth <= 3 ? 3 : ln.LineWidth;
+                            DrawSquare(graphics, newSolidBrush, ln.Start, minRadius);
+                            DrawSquare(graphics, newSolidBrush, ln.End, minRadius);
 
-                            static void DrawRectangle(Graphics graphics, SolidBrush solidBrush, Point point, int radius)
+                            static void DrawSquare(Graphics graphics, SolidBrush solidBrush, Point point, int width)
                             {
-                                Point startP = new Point(point.X - radius, point.Y - radius);
+                                Point startP = new Point(point.X - (int)(0.5 * width), point.Y - (int)(0.5 * width));
                                 //   Point endP = new Point(point.X + radius, point.Y + radius);
-                                Size size = new Size(2*radius, 2* radius);
-                                Rectangle rectangle = new Rectangle(startP,size );
-                                graphics.FillRectangle(solidBrush,rectangle);
-                               
+                                Size size = new Size(width, width);
+                                Rectangle rectangle = new Rectangle(startP, size);
+                                graphics.FillRectangle(solidBrush, rectangle);
                             }
                         }
                         else
                         {
                             pen.DashStyle = ln.DashStyle;
                             graphics.DrawLine(pen, ln.Start, ln.End);
-
                         }
                     }
 
@@ -96,7 +96,7 @@ namespace Paint
                 default:
                     break;
             }
-           // graphics.Flush();
+            // graphics.Flush();
             //  graphics.Dispose();
             lsbElement.Items.Clear();
             lsbElement.Items.AddRange(lines.ToArray());
@@ -115,7 +115,7 @@ namespace Paint
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 color = colorDialog.Color;
-               // btnColor.BackColor = color;
+                // btnColor.BackColor = color;
                 btnColor.ForeColor = color;
                 UpdatePenColor();
             }
@@ -156,9 +156,9 @@ namespace Paint
                 if (paintType == PaintTypeEnumeration.Line)
                 {
                     line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value))
-                    { IsSelected = false ,
-                    DashStyle = pen.DashStyle,
-                    
+                    {
+                        IsSelected = false,
+                        DashStyle = pen.DashStyle,
                     };
                     lines.Add(line);
                     this.pnPaint.Invalidate();
@@ -184,7 +184,6 @@ namespace Paint
         private void btnDelete_Click(object sender, EventArgs e)
         {
             Delete();
-           
         }
 
         private void Delete()
@@ -206,10 +205,11 @@ namespace Paint
 
             this.pnPaint.Invalidate();
         }
+
         private void btnNone_Click(object sender, EventArgs e)
         {
             paintType = PaintTypeEnumeration.None;
-          //  this.pnPaint.Invalidate();
+            //  this.pnPaint.Invalidate();
         }
 
         private void lsbElement_DoubleClick(object sender, EventArgs e)
@@ -224,7 +224,6 @@ namespace Paint
 
         private void lsbElement_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
             int selectedIndex = lsbElement.SelectedIndex;
             if (lsbElement.SelectedIndex != -1)
@@ -242,12 +241,10 @@ namespace Paint
                     else
                     {
                         lines[i].IsSelected = false;
-
                     }
                 }
                 pnPaint.Invalidate();
             }
-            
         }
     }
 }

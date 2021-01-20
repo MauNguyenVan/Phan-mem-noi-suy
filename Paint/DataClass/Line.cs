@@ -10,7 +10,8 @@ namespace Paint.DataClass
     {
         public Point Middle { get; set; }
         public double Length { get; set; }
-
+        private Point boudingStart;
+        private Point boundingEnd;
         public Line()
         {
             this.Name = PaintType.Line.ToString();
@@ -23,7 +24,20 @@ namespace Paint.DataClass
             this.End = end;
             this.Color = color;
             this.LineWidth = lineWidth;
+
+            int width = (int)Math.Abs(this.End.X - this.Start.X);
+            int height = (int)Math.Abs(this.End.Y - this.Start.Y);
+            int topLeftX = Start.X <= End.X ? Start.X : End.X;
+            int topLeftY = Start.Y <= End.Y ? Start.Y : End.Y;
+            int bottonRightX = topLeftX + width;
+            int bottonRightY = topLeftY + height;
+            boudingStart = new(topLeftX, topLeftY);
+            boundingEnd = new(bottonRightX, bottonRightY);
             Middle = GetMiddlePoint();
+        }
+        internal (Point TopLeft, Point BottomDown) GetBounding()
+        {
+            return (boudingStart, boundingEnd);
         }
         protected override GraphicsPath GraphicsPath
         {
@@ -47,13 +61,13 @@ namespace Paint.DataClass
                 IsSelected = IsSelected,
             };
         }
-        public  void FillDraw(Graphics graphics)
+        public void FillDraw(Graphics graphics)
         {
             throw new NotImplementedException();
         }
         public override void Draw(Graphics graphics)
         {
-          //  using GraphicsPath graphicPath = GraphicsPath;
+            //  using GraphicsPath graphicPath = GraphicsPath;
             const int size = 6;
             if (IsSelected)
             {
@@ -71,11 +85,12 @@ namespace Paint.DataClass
                 square.DrawFromCenter(graphics, Middle, size, size);
                 Pen penRec = new Pen(Color.Gray) { DashStyle = DashStyle.Dash };
                 Rectang rectang = new Rectang(this.Start, this.End)
-                { Pen = penRec,
+                {
+                    Pen = penRec,
                 };
                 rectang.Draw(graphics);
-               
-               // rectang.FillDraw(graphics);
+
+                // rectang.FillDraw(graphics);
                 Textx txtS = new Textx(graphics, Start, Start.ToString(), GetAngleLine());
                 Textx txtE = new Textx(graphics, End, End.ToString(), GetAngleLine());
                 Textx txtL = new Textx(graphics, Middle, $"Length={ GetLengthLine()};\nAngle ={GetAngleLine()};\nWidth={this.LineWidth}", GetAngleLine());

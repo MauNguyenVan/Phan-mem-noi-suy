@@ -162,7 +162,18 @@ namespace Paint
             }
             else if(paintType== PaintType.None)
             {
-               // if(e.Location==graphics. )
+                // if(e.Location==graphics. )
+                foreach (var line in lines)
+                {
+                    if(Utils.IsPointInBouding(e.Location, line.GetBounding().TopLeft, line.GetBounding().BottomDown))
+                    {
+                        pnPaint.Cursor = Cursors.SizeAll;
+                    }
+                    else
+                    {
+                        pnPaint.Cursor = Cursors.Default;
+                    }
+                }
             }
         }
 

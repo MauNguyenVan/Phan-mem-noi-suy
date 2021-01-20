@@ -22,12 +22,9 @@ namespace Paint.DataClass
             this.End = endPoint;
             Width = (int)Math.Abs(this.End.X - this.Start.X);
             Height = (int)Math.Abs(this.End.Y - this.Start.Y);
-            int topLeftX = Start.X <= End.X ? Start.X : End.X;
-            int topLeftY = Start.Y <= End.Y ? Start.Y : End.Y;
-            int bottonRightX = topLeftX + Width;
-            int bottonRightY = topLeftY + Height;
-            newStart = new(topLeftX, topLeftY);
-            newEnd = new(bottonRightX, bottonRightY);
+           
+            newStart = Utils.GetBounding(Start, End).TopLeft;
+            newEnd = Utils.GetBounding(Start, End).BottomDown;
             SolidBrush = new SolidBrush(Color.DarkRed);
         }
 

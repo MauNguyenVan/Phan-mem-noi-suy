@@ -24,15 +24,8 @@ namespace Paint.DataClass
             this.End = end;
             this.Color = color;
             this.LineWidth = lineWidth;
-
-            int width = (int)Math.Abs(this.End.X - this.Start.X);
-            int height = (int)Math.Abs(this.End.Y - this.Start.Y);
-            int topLeftX = Start.X <= End.X ? Start.X : End.X;
-            int topLeftY = Start.Y <= End.Y ? Start.Y : End.Y;
-            int bottonRightX = topLeftX + width;
-            int bottonRightY = topLeftY + height;
-            boudingStart = new(topLeftX, topLeftY);
-            boundingEnd = new(bottonRightX, bottonRightY);
+            boudingStart = Utils.GetBounding(Start, End).TopLeft;
+            boundingEnd = Utils.GetBounding(Start, End).BottomDown;
             Middle = GetMiddlePoint();
         }
         internal (Point TopLeft, Point BottomDown) GetBounding()

@@ -14,7 +14,7 @@ namespace Paint
 {
     public partial class FrmMain : Form
     {
-        private PaintTypeEnumeration paintType;
+        private PaintType paintType;
         private Graphics graphics = default;
         private Pen pen;
         private float zoom = 1;
@@ -38,7 +38,7 @@ namespace Paint
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            paintType = PaintTypeEnumeration.None;
+            paintType = PaintType.None;
             this.WindowState = FormWindowState.Maximized;
 
             graphics = pnPaint.CreateGraphics();
@@ -50,7 +50,7 @@ namespace Paint
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             switch (paintType)
             {
-                case PaintTypeEnumeration.Line:
+                case PaintType.Line:
 
                     //graphics.DrawLine(pen, startPoint, endPoint);
                     foreach (var ln in lines)
@@ -64,11 +64,13 @@ namespace Paint
 
                     break;
 
-                case PaintTypeEnumeration.Rectangle:
+                case PaintType.Rectangle:
                     break;
 
-                case PaintTypeEnumeration.Circle:
+                case PaintType.Circle:
                     break;
+
+                case PaintType.None:
 
                 default:
                     break;
@@ -82,7 +84,7 @@ namespace Paint
         private void btnLine_Click(object sender, EventArgs e)
         {
             this.pnPaint.Invalidate();
-            paintType = PaintTypeEnumeration.Line;
+            paintType = PaintType.Line;
         }
 
         private void btnColor_Click(object sender, EventArgs e)
@@ -130,7 +132,7 @@ namespace Paint
             if (e.Button == MouseButtons.Left)
             {
                 endPoint = e.Location;
-                if (paintType == PaintTypeEnumeration.Line)
+                if (paintType == PaintType.Line && startPoint!= endPoint)
                 {
                     line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value))
                     {
@@ -150,7 +152,18 @@ namespace Paint
         private void pnPaint_MouseMove(object sender, MouseEventArgs e)
         {
             endPoint = e.Location;
-            //   this.pnPaint.Invalidate();
+            if (e.Button == MouseButtons.Left 
+                && paintType == PaintType.Line 
+                && startPoint != endPoint)
+            {
+                Line newLine = new Line(startPoint, endPoint, color, 3);
+                newLine.Draw(graphics);
+                this.pnPaint.Update();
+            }
+            else if(paintType== PaintType.None)
+            {
+               // if(e.Location==graphics. )
+            }
         }
 
         private void pnPaint_Resize(object sender, EventArgs e)
@@ -183,7 +196,6 @@ namespace Paint
 
         private void Delete()
         {
-            
             ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
             int selectedIndex = lsbElement.SelectedIndex;
             if (lsbElement.SelectedIndex != -1)
@@ -194,16 +206,14 @@ namespace Paint
                     lines.RemoveAt(i);
                 }
             }
-
             lsbElement.Items.Clear();
             lsbElement.Items.AddRange(lines.ToArray());
-
             this.pnPaint.Invalidate();
         }
 
         private void btnNone_Click(object sender, EventArgs e)
         {
-            paintType = PaintTypeEnumeration.None;
+            paintType = PaintType.None;
             //  this.pnPaint.Invalidate();
         }
 
@@ -219,7 +229,6 @@ namespace Paint
 
         private void lsbElement_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
                 ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
                 int selectedIndex = lsbElement.SelectedIndex;
                 if (lsbElement.SelectedIndex != -1)

@@ -26,7 +26,7 @@ namespace Paint.DataClass
         public abstract bool IsHit(Point point);
 
         public abstract void Draw(Graphics graphics);
-
+       // public virtual void FillDraw(Graphics graphics) { }
         public abstract void Move(Point distance);
 
         public abstract object Clone();

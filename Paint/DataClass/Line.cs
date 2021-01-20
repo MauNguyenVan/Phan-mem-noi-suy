@@ -13,19 +13,18 @@ namespace Paint.DataClass
 
         public Line()
         {
-            this.Name = PaintTypeEnumeration.Line.ToString();
+            this.Name = PaintType.Line.ToString();
         }
 
         public Line(Point start, Point end, Color color, int lineWidth)
         {
-            this.Name = PaintTypeEnumeration.Line.ToString();
+            this.Name = PaintType.Line.ToString();
             this.Start = start;
             this.End = end;
             this.Color = color;
             this.LineWidth = lineWidth;
             Middle = GetMiddlePoint();
         }
-
         protected override GraphicsPath GraphicsPath
         {
             get
@@ -48,11 +47,14 @@ namespace Paint.DataClass
                 IsSelected = IsSelected,
             };
         }
-
+        public  void FillDraw(Graphics graphics)
+        {
+            throw new NotImplementedException();
+        }
         public override void Draw(Graphics graphics)
         {
-            using GraphicsPath graphicPath = GraphicsPath;
-
+          //  using GraphicsPath graphicPath = GraphicsPath;
+            const int size = 6;
             if (IsSelected)
             {
                 int minSize = LineWidth <= 3 ? 3 : LineWidth + 2;
@@ -61,16 +63,22 @@ namespace Paint.DataClass
                     DashStyle = this.DashStyle,
                 };
                 SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
-                graphics.DrawPath(pen, graphicPath);
-                Square square = new Square();
+                graphics.DrawPath(pen, GraphicsPath);
+                Rectang square = new Rectang();
                 square.SolidBrush = newSolidBrush;
-                square.DrawFromCenter(graphics, Start, 6);
-                square.DrawFromCenter(graphics, End, 6);
-                square.DrawFromCenter(graphics, Middle, 6);
+                square.DrawFromCenter(graphics, Start, size, size);
+                square.DrawFromCenter(graphics, End, size, size);
+                square.DrawFromCenter(graphics, Middle, size, size);
+                Pen penRec = new Pen(Color.Gray) { DashStyle = DashStyle.Dash };
+                Rectang rectang = new Rectang(this.Start, this.End)
+                { Pen = penRec,
+                };
+                rectang.Draw(graphics);
+               
+               // rectang.FillDraw(graphics);
                 Textx txtS = new Textx(graphics, Start, Start.ToString(), GetAngleLine());
                 Textx txtE = new Textx(graphics, End, End.ToString(), GetAngleLine());
-                //Textx txtM = new Textx(graphics, Middle, Middle.ToString(), GetAngleLine());
-                Textx txtL = new Textx(graphics, Middle, $"Length={ GetLengthLine()}; Angle ={GetAngleLine()};\nWidth={this.LineWidth}", GetAngleLine());
+                Textx txtL = new Textx(graphics, Middle, $"Length={ GetLengthLine()};\nAngle ={GetAngleLine()};\nWidth={this.LineWidth}", GetAngleLine());
 
             }
             else
@@ -79,7 +87,7 @@ namespace Paint.DataClass
                 {
                     DashStyle = this.DashStyle,
                 };
-                graphics.DrawPath(pen, graphicPath);
+                graphics.DrawPath(pen, GraphicsPath);
             }
         }
 

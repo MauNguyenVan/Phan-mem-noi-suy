@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Paint.DataClass
 {
-    internal enum PaintTypeEnumeration
+    internal enum PaintType
     {
         None,
         Line,

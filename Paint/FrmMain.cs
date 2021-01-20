@@ -17,7 +17,7 @@ namespace Paint
         private PaintTypeEnumeration paintType;
         private Graphics graphics = default;
         private Pen pen;
-
+        private float zoom = 1;
         // private Brush brush;
         private Color color = Color.Black;
 
@@ -42,6 +42,7 @@ namespace Paint
             this.WindowState = FormWindowState.Maximized;
 
             graphics = pnPaint.CreateGraphics();
+
         }
 
         private void pnPaint_Paint(object sender, PaintEventArgs e)
@@ -156,7 +157,25 @@ namespace Paint
         {
             pnPaint.CreateGraphics();
         }
-
+        private void PnPaint_MouseWheel(object sender, MouseEventArgs e)
+        {
+            //  graphics.RenderingOrigin = e.Location;
+            ClearAllSelection();
+            if (e.Delta > 0)
+            {
+                zoom = 1.1f;
+            }
+            else if (e.Delta < 0)
+            {
+                if (0.5f * zoom > 0.1)
+                {
+                    zoom = 0.9f;
+                }
+            }
+           
+            graphics.ScaleTransform(zoom, zoom, MatrixOrder.Prepend);
+            pnPaint.Invalidate();
+        }
         private void btnDelete_Click(object sender, EventArgs e)
         {
             Delete();
@@ -164,13 +183,13 @@ namespace Paint
 
         private void Delete()
         {
+            
             ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
             int selectedIndex = lsbElement.SelectedIndex;
             if (lsbElement.SelectedIndex != -1)
             {
-                for (int i = selectedIndex; i < selectedItems.Count; i++)
+                for (int i = selectedItems.Count + selectedIndex - 1; i >= selectedIndex; i--)
                 {
-                    MessageBox.Show(lsbElement.SelectedIndex.ToString(), i.ToString());
                     lsbElement.Items.RemoveAt(i);
                     lines.RemoveAt(i);
                 }
@@ -200,9 +219,7 @@ namespace Paint
 
         private void lsbElement_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int j = 1;
-            if (SelectListBox(ref j))
-            {
+           
                 ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
                 int selectedIndex = lsbElement.SelectedIndex;
                 if (lsbElement.SelectedIndex != -1)
@@ -225,10 +242,7 @@ namespace Paint
 
                     pnPaint.Invalidate();
                 }
-                lsbElement.SelectedIndex = 1;
-            }
         }
-
         private bool SelectListBox(ref int i)
         {
             if (i == 1)
@@ -240,6 +254,14 @@ namespace Paint
                 return false;
             }
             i++;
+        }
+        private void ClearAllSelection()
+        {
+            lsbElement.ClearSelected();
+            for (int i = 0; i < lsbElement.Items.Count; i++)
+            {
+                lines[i].IsSelected = false;
+            }
         }
     }
 }

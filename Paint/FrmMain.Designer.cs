@@ -32,6 +32,7 @@ namespace Paint
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnPaint = new System.Windows.Forms.Panel();
             this.pnRibbon = new System.Windows.Forms.Panel();
+            this.cbxLineType = new System.Windows.Forms.ComboBox();
             this.btnNone = new System.Windows.Forms.Button();
             this.numLightWidth = new System.Windows.Forms.NumericUpDown();
             this.btnClear = new System.Windows.Forms.Button();
@@ -41,7 +42,6 @@ namespace Paint
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.cbxLineType = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnRibbon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numLightWidth)).BeginInit();
@@ -75,6 +75,7 @@ namespace Paint
             this.pnPaint.Name = "pnPaint";
             this.pnPaint.Size = new System.Drawing.Size(698, 374);
             this.pnPaint.TabIndex = 0;
+            this.pnPaint.MouseWheel += PnPaint_MouseWheel;
             this.pnPaint.Paint += new System.Windows.Forms.PaintEventHandler(this.pnPaint_Paint);
             this.pnPaint.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnPaint_MouseDown);
             this.pnPaint.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnPaint_MouseMove);
@@ -95,6 +96,15 @@ namespace Paint
             this.pnRibbon.Name = "pnRibbon";
             this.pnRibbon.Size = new System.Drawing.Size(698, 94);
             this.pnRibbon.TabIndex = 1;
+            // 
+            // cbxLineType
+            // 
+            this.cbxLineType.FormattingEnabled = true;
+            this.cbxLineType.Location = new System.Drawing.Point(297, 34);
+            this.cbxLineType.Name = "cbxLineType";
+            this.cbxLineType.Size = new System.Drawing.Size(116, 23);
+            this.cbxLineType.TabIndex = 6;
+            this.cbxLineType.SelectedIndexChanged += new System.EventHandler(this.cbxLineType_SelectedIndexChanged);
             // 
             // btnNone
             // 
@@ -185,15 +195,6 @@ namespace Paint
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // cbxLineType
-            // 
-            this.cbxLineType.FormattingEnabled = true;
-            this.cbxLineType.Location = new System.Drawing.Point(297, 34);
-            this.cbxLineType.Name = "cbxLineType";
-            this.cbxLineType.Size = new System.Drawing.Size(116, 23);
-            this.cbxLineType.TabIndex = 6;
-            this.cbxLineType.SelectedIndexChanged += new System.EventHandler(this.cbxLineType_SelectedIndexChanged);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -210,6 +211,8 @@ namespace Paint
             this.ResumeLayout(false);
 
         }
+
+      
 
         #endregion
 

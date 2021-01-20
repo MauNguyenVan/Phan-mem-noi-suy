@@ -70,7 +70,8 @@ namespace Paint.DataClass
                 Textx txtS = new Textx(graphics, Start, Start.ToString(), GetAngleLine());
                 Textx txtE = new Textx(graphics, End, End.ToString(), GetAngleLine());
                 //Textx txtM = new Textx(graphics, Middle, Middle.ToString(), GetAngleLine());
-                Textx txtL = new Textx(graphics, Middle, $"Length={ GetLengthLine()}; Angle ={GetAngleLine()}", GetAngleLine());
+                Textx txtL = new Textx(graphics, Middle, $"Length={ GetLengthLine()}; Angle ={GetAngleLine()};\nWidth={this.LineWidth}", GetAngleLine());
+
             }
             else
             {

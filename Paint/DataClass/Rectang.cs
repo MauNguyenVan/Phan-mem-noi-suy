@@ -24,7 +24,7 @@ namespace Paint.DataClass
             Height = (int)Math.Abs(this.End.Y - this.Start.Y);
            
             newStart = Utils.GetBounding(Start, End).TopLeft;
-            newEnd = Utils.GetBounding(Start, End).BottomDown;
+            newEnd = Utils.GetBounding(Start, End).BottomRight;
             SolidBrush = new SolidBrush(Color.DarkRed);
         }
 

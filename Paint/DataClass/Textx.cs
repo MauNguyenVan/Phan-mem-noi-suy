@@ -19,7 +19,7 @@ namespace Paint.DataClass
         public StringFormat stringFormat = new StringFormat();
         public float TextAngle { get; set; } = 0f;
 
-        public Textx(Graphics graphics, Point point, string content, float textAngle)
+        public Textx(Graphics graphics, Point point, string content, float textAngle=0f)
         {
             this.Graphics = graphics;
             this.Point = point;

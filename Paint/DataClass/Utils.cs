@@ -9,7 +9,7 @@ namespace Paint.DataClass
 {
     internal static class Utils
     {
-        internal static (Point TopLeft, Point BottomDown) GetBounding(Point fistPoint, Point endPoint)
+        internal static (Point TopLeft, Point BottomRight) GetBounding(Point fistPoint, Point endPoint)
         {
             int width = Math.Abs(endPoint.X - fistPoint.X);
             int height = Math.Abs(endPoint.Y - fistPoint.Y);

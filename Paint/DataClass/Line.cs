@@ -16,17 +16,39 @@ namespace Paint.DataClass
         {
             this.Name = PaintType.Line.ToString();
         }
-
+    static Line() { }
         public Line(Point start, Point end, Color color, int lineWidth)
         {
-            this.Name = PaintType.Line.ToString();
-            this.Start = start;
-            this.End = end;
-            this.Color = color;
-            this.LineWidth = lineWidth;
-            boudingStart = Utils.GetBounding(Start, End).TopLeft;
-            boundingEnd = Utils.GetBounding(Start, End).BottomDown;
-            Middle = GetMiddlePoint();
+            if(start !=end)
+            {
+                this.Name = PaintType.Line.ToString();
+                this.Start = start;
+                this.End = end;
+                this.Color = color;
+                this.LineWidth = lineWidth;
+                boudingStart = Utils.GetBounding(Start, End).TopLeft;
+                boundingEnd = Utils.GetBounding(Start, End).BottomRight;
+                Middle = GetMiddlePoint();
+            }
+            
+        }
+        public bool IsVertical()
+        {
+            bool isVertical=false;
+            if(Start.X== End.X)
+            {
+                isVertical = true;
+            }
+            return isVertical;
+        }
+        public bool IsHorizontal()
+        {
+            bool isHorizontal = false;
+            if (Start.X == End.X)
+            {
+                isHorizontal = true;
+            }
+            return isHorizontal;
         }
         internal (Point TopLeft, Point BottomDown) GetBounding()
         {
@@ -87,7 +109,7 @@ namespace Paint.DataClass
                 Textx txtS = new Textx(graphics, Start, Start.ToString(), GetAngleLine());
                 Textx txtE = new Textx(graphics, End, End.ToString(), GetAngleLine());
                 Textx txtL = new Textx(graphics, Middle, $"Length={ GetLengthLine()};\nAngle ={GetAngleLine()};\nWidth={this.LineWidth}", GetAngleLine());
-
+               
             }
             else
             {

@@ -28,6 +28,7 @@ namespace Paint
         public FrmMain()
         {
             InitializeComponent();
+
             pen = new Pen(color);
 
             foreach (string style in Enum.GetNames(typeof(DashStyle)))
@@ -110,7 +111,7 @@ namespace Paint
             graphics.Clear(pnPaint.BackColor);
             lines.Clear();
             lsbElement.Items.Clear();
-             this.propertyGrid1.SelectedObject = null;
+            this.propertyGrid1.SelectedObject = null;
             this.propertyGrid1.Refresh();
         }
 
@@ -135,7 +136,7 @@ namespace Paint
             {
                 endPoint = e.Location;
                 if (paintType == PaintType.Line && startPoint != endPoint)
-                {
+                {  
                     line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value))
                     {
                         IsSelected = false,
@@ -158,6 +159,11 @@ namespace Paint
                 && paintType == PaintType.Line
                 && startPoint != endPoint)
             {
+                 this.Cursor = new Cursor(Cursor.Current.Handle);
+                Cursor.Position =e.Location ;// new Point(startPoint.X, endPoint.Y);
+                endPoint = Cursor.Position;
+                // Cursor.Clip = new Rectangle(this.Location, this.Size);
+
                 Line newLine = new Line(startPoint, endPoint, color, 3);
                 newLine.Draw(graphics);
                 this.pnPaint.Update();
@@ -228,6 +234,8 @@ namespace Paint
         {
             paintType = PaintType.None;
             //  this.pnPaint.Invalidate();
+
+
         }
 
         private void lsbElement_DoubleClick(object sender, EventArgs e)
@@ -263,10 +271,10 @@ namespace Paint
                 }
 
                 pnPaint.Invalidate();
-                this.propertyGrid1.SelectedObjects = lines.Where(x=>x.IsSelected).ToArray();
+                this.propertyGrid1.SelectedObjects = lines.Where(x => x.IsSelected).ToArray();
 
             }
-           
+
         }
         private bool SelectListBox(ref int i)
         {
@@ -292,6 +300,12 @@ namespace Paint
 
         }
 
+        private void pnPaint_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
+
+        }
+
         private void ClearAllSelection()
         {
             lsbElement.ClearSelected();
@@ -299,7 +313,7 @@ namespace Paint
             {
                 lines[i].IsSelected = false;
             }
-           
+
         }
     }
 }

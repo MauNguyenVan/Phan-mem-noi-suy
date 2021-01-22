@@ -95,7 +95,7 @@ namespace Paint
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 197F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.Controls.Add(this.pnPaint, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.pnRibbon, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lsbElement, 1, 1);
@@ -117,12 +117,13 @@ namespace Paint
             this.pnPaint.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnPaint.Location = new System.Drawing.Point(4, 105);
             this.pnPaint.Name = "pnPaint";
-            this.pnPaint.Size = new System.Drawing.Size(651, 374);
+            this.pnPaint.Size = new System.Drawing.Size(648, 374);
             this.pnPaint.TabIndex = 0;
             this.pnPaint.Paint += new System.Windows.Forms.PaintEventHandler(this.pnPaint_Paint);
             this.pnPaint.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnPaint_MouseDown);
             this.pnPaint.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnPaint_MouseMove);
             this.pnPaint.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnPaint_MouseUp);
+            this.pnPaint.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.pnPaint_PreviewKeyDown);
             this.pnPaint.Resize += new System.EventHandler(this.pnPaint_Resize);
             // 
             // mnuContext
@@ -171,7 +172,7 @@ namespace Paint
             this.pnRibbon.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnRibbon.Location = new System.Drawing.Point(4, 4);
             this.pnRibbon.Name = "pnRibbon";
-            this.pnRibbon.Size = new System.Drawing.Size(651, 94);
+            this.pnRibbon.Size = new System.Drawing.Size(648, 94);
             this.pnRibbon.TabIndex = 1;
             // 
             // cbxLineType
@@ -249,7 +250,7 @@ namespace Paint
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(651, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(648, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -480,10 +481,10 @@ namespace Paint
             this.lsbElement.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lsbElement.FormattingEnabled = true;
             this.lsbElement.ItemHeight = 15;
-            this.lsbElement.Location = new System.Drawing.Point(662, 105);
+            this.lsbElement.Location = new System.Drawing.Point(659, 105);
             this.lsbElement.Name = "lsbElement";
             this.lsbElement.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lsbElement.Size = new System.Drawing.Size(191, 374);
+            this.lsbElement.Size = new System.Drawing.Size(194, 374);
             this.lsbElement.TabIndex = 2;
             this.lsbElement.SelectedIndexChanged += new System.EventHandler(this.lsbElement_SelectedIndexChanged);
             this.lsbElement.DoubleClick += new System.EventHandler(this.lsbElement_DoubleClick);
@@ -492,9 +493,9 @@ namespace Paint
             // 
             this.panel1.Controls.Add(this.button1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(662, 4);
+            this.panel1.Location = new System.Drawing.Point(659, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(191, 94);
+            this.panel1.Size = new System.Drawing.Size(194, 94);
             this.panel1.TabIndex = 3;
             // 
             // button1

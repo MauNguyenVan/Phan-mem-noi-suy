@@ -165,7 +165,7 @@ namespace Paint
                 // if(e.Location==graphics. )
                 foreach (var line in lines)
                 {
-                    if(Utils.IsPointInBouding(e.Location, line.GetBounding().TopLeft, line.GetBounding().BottomDown))
+                    if(BoundingBox.IsPointInBouding(e.Location, line.BoundingBox))
                     {
                         pnPaint.Cursor = Cursors.SizeAll;
                     }
@@ -261,7 +261,9 @@ namespace Paint
                     }
 
                     pnPaint.Invalidate();
-                }
+                this.propertyGrid1.SelectedObject = lines[lsbElement.SelectedIndex];
+               
+            }
         }
         private bool SelectListBox(ref int i)
         {
@@ -275,6 +277,18 @@ namespace Paint
             }
             i++;
         }
+
+        private void propertyGrid1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            pnPaint.Invalidate();
+         
+        }
+
         private void ClearAllSelection()
         {
             lsbElement.ClearSelected();

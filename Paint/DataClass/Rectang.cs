@@ -12,27 +12,20 @@ namespace Paint.DataClass
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        private Point newStart;
-        private Point newEnd;
+       public BoundingBox BoundingBox { get; }
         internal Rectang()
         { }
         public Rectang(Point startPoint, Point endPoint)
         {
             this.Start = startPoint;
             this.End = endPoint;
-            Width = (int)Math.Abs(this.End.X - this.Start.X);
-            Height = (int)Math.Abs(this.End.Y - this.Start.Y);
-           
-            newStart = Utils.GetBounding(Start, End).TopLeft;
-            newEnd = Utils.GetBounding(Start, End).BottomRight;
+            BoundingBox = new BoundingBox(new Point[] { Start, End });
+            Width = BoundingBox.Width;
+            Height = BoundingBox.Height;
             SolidBrush = new SolidBrush(Color.DarkRed);
         }
 
-        internal (Point TopLeft , Point BottomDown) GetBounding()
-        {
-            return (newStart, newEnd);
-        }
-
+      
         protected override GraphicsPath GraphicsPath => throw new NotImplementedException();
 
         public override object Clone()
@@ -47,14 +40,14 @@ namespace Paint.DataClass
         public override void Draw(Graphics graphics)
         {
             Size size = new Size(Width, Height);
-            Rectangle rectangle = new Rectangle(newStart, size);
+            Rectangle rectangle = new Rectangle(BoundingBox.Min, size);
             graphics.DrawRectangle(Pen, rectangle);
         }
 
         public  void FillDraw(Graphics graphics)
         {
             Size size = new Size(Width, Height);
-            Rectangle rectangle = new Rectangle(newStart, size);
+            Rectangle rectangle = new Rectangle(BoundingBox.Min, size);
             graphics.FillRectangle(SolidBrush, rectangle);
         }
 

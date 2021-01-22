@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
@@ -8,34 +9,46 @@ namespace Paint.DataClass
 {
     internal class Line : Shape
     {
-        public Point Middle { get; set; }
-        public double Length { get; set; }
-        private Point boudingStart;
-        private Point boundingEnd;
+        [Category(Categories.LOCATION)]
+        public Point Middle { get; }
+        [Category(Categories.PROPERTIES)]
+        public float Length { get; }
+        [Category(Categories.PROPERTIES)]
+        public float Angle { get; }
+        internal BoundingBox BoundingBox { get; }
         public Line()
         {
             this.Name = PaintType.Line.ToString();
         }
-    static Line() { }
+        static Line()
+        {
+            
+        }
+       
         public Line(Point start, Point end, Color color, int lineWidth)
         {
-            if(start !=end)
+            if (start != end)
             {
+                this.Id = CurrentId + 1;
+                Shape.CurrentId = this.Id;
+                this.IsVisible = true;
                 this.Name = PaintType.Line.ToString();
                 this.Start = start;
                 this.End = end;
                 this.Color = color;
                 this.LineWidth = lineWidth;
-                boudingStart = Utils.GetBounding(Start, End).TopLeft;
-                boundingEnd = Utils.GetBounding(Start, End).BottomRight;
+                this.BoundingBox = new BoundingBox(new Point[] { Start, End });
+
                 Middle = GetMiddlePoint();
+                this.Length = GetLengthLine();
+                this.Angle = GetAngleLine();
             }
-            
+
         }
         public bool IsVertical()
         {
-            bool isVertical=false;
-            if(Start.X== End.X)
+            bool isVertical = false;
+            if (Start.X == End.X)
             {
                 isVertical = true;
             }
@@ -50,10 +63,7 @@ namespace Paint.DataClass
             }
             return isHorizontal;
         }
-        internal (Point TopLeft, Point BottomDown) GetBounding()
-        {
-            return (boudingStart, boundingEnd);
-        }
+
         protected override GraphicsPath GraphicsPath
         {
             get
@@ -83,42 +93,46 @@ namespace Paint.DataClass
         public override void Draw(Graphics graphics)
         {
             //  using GraphicsPath graphicPath = GraphicsPath;
-            const int size = 6;
-            if (IsSelected)
+            if (IsVisible)
             {
-                int minSize = LineWidth <= 3 ? 3 : LineWidth + 2;
-                using Pen pen = new Pen(Color.Yellow, minSize)
+                const int size = 6;
+                if (IsSelected)
                 {
-                    DashStyle = this.DashStyle,
-                };
-                SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
-                graphics.DrawPath(pen, GraphicsPath);
-                Rectang square = new Rectang();
-                square.SolidBrush = newSolidBrush;
-                square.DrawFromCenter(graphics, Start, size, size);
-                square.DrawFromCenter(graphics, End, size, size);
-                square.DrawFromCenter(graphics, Middle, size, size);
-                Pen penRec = new Pen(Color.Gray) { DashStyle = DashStyle.Dash };
-                Rectang rectang = new Rectang(this.Start, this.End)
-                {
-                    Pen = penRec,
-                };
-                rectang.Draw(graphics);
+                    int minSize = LineWidth <= 3 ? 3 : LineWidth + 2;
+                    using Pen pen = new Pen(Color.Yellow, minSize)
+                    {
+                        DashStyle = this.DashStyle,
+                    };
+                    SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
+                    graphics.DrawPath(pen, GraphicsPath);
+                    Rectang square = new Rectang();
+                    square.SolidBrush = newSolidBrush;
+                    square.DrawFromCenter(graphics, Start, size, size);
+                    square.DrawFromCenter(graphics, End, size, size);
+                    square.DrawFromCenter(graphics, Middle, size, size);
+                    Pen penRec = new Pen(Color.Gray) { DashStyle = DashStyle.Dash };
+                    Rectang rectang = new Rectang(this.Start, this.End)
+                    {
+                        Pen = penRec,
+                    };
+                    rectang.Draw(graphics);
 
-                // rectang.FillDraw(graphics);
-                Textx txtS = new Textx(graphics, Start, Start.ToString(), GetAngleLine());
-                Textx txtE = new Textx(graphics, End, End.ToString(), GetAngleLine());
-                Textx txtL = new Textx(graphics, Middle, $"Length={ GetLengthLine()};\nAngle ={GetAngleLine()};\nWidth={this.LineWidth}", GetAngleLine());
-               
-            }
-            else
-            {
-                using Pen pen = new Pen(Color, LineWidth)
+                    // rectang.FillDraw(graphics);
+                    Textx txtS = new Textx(graphics, Start, Start.ToString(), Angle);
+                    Textx txtE = new Textx(graphics, End, End.ToString(), Angle);
+                    Textx txtL = new Textx(graphics, Middle, $"Length={ this.Length};\nAngle ={Angle};\nWidth={this.LineWidth}", Angle);
+
+                }
+                else
                 {
-                    DashStyle = this.DashStyle,
-                };
-                graphics.DrawPath(pen, GraphicsPath);
+                    using Pen pen = new Pen(Color, LineWidth)
+                    {
+                        DashStyle = this.DashStyle,
+                    };
+                    graphics.DrawPath(pen, GraphicsPath);
+                }
             }
+
         }
 
         public override bool IsHit(Point point)
@@ -166,11 +180,11 @@ namespace Paint.DataClass
             return new Point(middleX, middleY);
         }
 
-        private double GetLengthLine()
+        private float GetLengthLine()
         {
             double x2 = Math.Pow(this.End.X - this.Start.X, 2);
             double y2 = Math.Pow(this.End.Y - this.Start.Y, 2);
-            return Math.Sqrt(x2 + y2);
+            return (float)Math.Sqrt(x2 + y2);
         }
     }
 }

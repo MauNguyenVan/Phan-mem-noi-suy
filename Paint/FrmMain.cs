@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Paint.DataClass;
-
+# nullable enable
 namespace Paint
 {
     public partial class FrmMain : Form
@@ -110,6 +110,8 @@ namespace Paint
             graphics.Clear(pnPaint.BackColor);
             lines.Clear();
             lsbElement.Items.Clear();
+             this.propertyGrid1.SelectedObject = null;
+            this.propertyGrid1.Refresh();
         }
 
         private void pnPaint_MouseDown(object sender, MouseEventArgs e)
@@ -132,7 +134,7 @@ namespace Paint
             if (e.Button == MouseButtons.Left)
             {
                 endPoint = e.Location;
-                if (paintType == PaintType.Line && startPoint!= endPoint)
+                if (paintType == PaintType.Line && startPoint != endPoint)
                 {
                     line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value))
                     {
@@ -152,20 +154,20 @@ namespace Paint
         private void pnPaint_MouseMove(object sender, MouseEventArgs e)
         {
             endPoint = e.Location;
-            if (e.Button == MouseButtons.Left 
-                && paintType == PaintType.Line 
+            if (e.Button == MouseButtons.Left
+                && paintType == PaintType.Line
                 && startPoint != endPoint)
             {
                 Line newLine = new Line(startPoint, endPoint, color, 3);
                 newLine.Draw(graphics);
                 this.pnPaint.Update();
             }
-            else if(paintType== PaintType.None)
+            else if (paintType == PaintType.None)
             {
                 // if(e.Location==graphics. )
                 foreach (var line in lines)
                 {
-                    if(BoundingBox.IsPointInBouding(e.Location, line.BoundingBox))
+                    if (BoundingBox.IsPointInBouding(e.Location, line.BoundingBox))
                     {
                         pnPaint.Cursor = Cursors.SizeAll;
                     }
@@ -196,7 +198,7 @@ namespace Paint
                     zoom = 0.9f;
                 }
             }
-           
+
             graphics.ScaleTransform(zoom, zoom, MatrixOrder.Prepend);
             pnPaint.Invalidate();
         }
@@ -240,30 +242,31 @@ namespace Paint
 
         private void lsbElement_SelectedIndexChanged(object sender, EventArgs e)
         {
-                ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
-                int selectedIndex = lsbElement.SelectedIndex;
-                if (lsbElement.SelectedIndex != -1)
+            ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
+            int selectedIndex = lsbElement.SelectedIndex;
+            if (lsbElement.SelectedIndex != -1)
+            {
+                //for (int i = selectedIndex; i < selectedItems.Count; i++)
+                //{
+                //    lines[i].IsSelected = true;
+                //}
+                for (int i = 0; i < lsbElement.Items.Count; i++)
                 {
-                    //for (int i = selectedIndex; i < selectedItems.Count; i++)
-                    //{
-                    //    lines[i].IsSelected = true;
-                    //}
-                    for (int i = 0; i < lsbElement.Items.Count; i++)
+                    if (i >= selectedIndex && i < selectedIndex + selectedItems.Count)
                     {
-                        if (i >= selectedIndex && i < selectedIndex + selectedItems.Count)
-                        {
-                            lines[i].IsSelected = true;
-                        }
-                        else
-                        {
-                            lines[i].IsSelected = false;
-                        }
+                        lines[i].IsSelected = true;
                     }
+                    else
+                    {
+                        lines[i].IsSelected = false;
+                    }
+                }
 
-                    pnPaint.Invalidate();
-                this.propertyGrid1.SelectedObject = lines[lsbElement.SelectedIndex];
-               
+                pnPaint.Invalidate();
+                this.propertyGrid1.SelectedObjects = lines.Where(x=>x.IsSelected).ToArray();
+
             }
+           
         }
         private bool SelectListBox(ref int i)
         {
@@ -286,7 +289,7 @@ namespace Paint
         private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             pnPaint.Invalidate();
-         
+
         }
 
         private void ClearAllSelection()
@@ -296,6 +299,7 @@ namespace Paint
             {
                 lines[i].IsSelected = false;
             }
+           
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Paint.Views
         private Color color = Color.Black;
 
         private List<Line> lines = new List<Line>();
+        private List<FreeLine> freeLines = new List<FreeLine>();
         private Line line;
         private Point startPoint, endPoint;
 
@@ -159,6 +160,7 @@ namespace Paint.Views
         private void pnPaint_MouseMove(object sender, MouseEventArgs e)
         {
             endPoint = e.Location;
+            List<Point> freelines = new List<Point>();
             if (e.Button == MouseButtons.Left
                 && paintType == PaintType.Line
                 && startPoint != endPoint)
@@ -175,8 +177,10 @@ namespace Paint.Views
             else if (e.Button == MouseButtons.Left&&paintType == PaintType.FreeLine)
             {
 
-                graphics.DrawLine(pen, startPoint, endPoint);
+               // graphics.DrawLine(pen, startPoint, endPoint);
+                freelines.Add(startPoint);
                 startPoint = endPoint;
+                
                // pnPaint.Invalidate();
 
             }
@@ -195,6 +199,7 @@ namespace Paint.Views
                     }
                 }
             }
+            freeLines.Add(new FreeLine(freelines.ToArray()));
         }
 
         private void pnPaint_Resize(object sender, EventArgs e)

@@ -100,7 +100,7 @@ namespace Paint.Views
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 221F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 223F));
             this.tableLayoutPanel1.Controls.Add(this.pnRibbon, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lsbElement, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 0);
@@ -130,7 +130,7 @@ namespace Paint.Views
             this.pnRibbon.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnRibbon.Location = new System.Drawing.Point(4, 4);
             this.pnRibbon.Name = "pnRibbon";
-            this.pnRibbon.Size = new System.Drawing.Size(627, 94);
+            this.pnRibbon.Size = new System.Drawing.Size(625, 94);
             this.pnRibbon.TabIndex = 1;
             // 
             // btnFreeLine
@@ -218,7 +218,7 @@ namespace Paint.Views
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(627, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(625, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -449,10 +449,10 @@ namespace Paint.Views
             this.lsbElement.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lsbElement.FormattingEnabled = true;
             this.lsbElement.ItemHeight = 15;
-            this.lsbElement.Location = new System.Drawing.Point(638, 105);
+            this.lsbElement.Location = new System.Drawing.Point(636, 105);
             this.lsbElement.Name = "lsbElement";
             this.lsbElement.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lsbElement.Size = new System.Drawing.Size(215, 374);
+            this.lsbElement.Size = new System.Drawing.Size(217, 374);
             this.lsbElement.TabIndex = 2;
             this.lsbElement.SelectedIndexChanged += new System.EventHandler(this.lsbElement_SelectedIndexChanged);
             this.lsbElement.DoubleClick += new System.EventHandler(this.lsbElement_DoubleClick);
@@ -461,9 +461,9 @@ namespace Paint.Views
             // 
             this.panel1.Controls.Add(this.button1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(638, 4);
+            this.panel1.Location = new System.Drawing.Point(636, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(215, 94);
+            this.panel1.Size = new System.Drawing.Size(217, 94);
             this.panel1.TabIndex = 3;
             // 
             // button1
@@ -489,8 +489,8 @@ namespace Paint.Views
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pnPaint);
-            this.splitContainer1.Size = new System.Drawing.Size(627, 374);
-            this.splitContainer1.SplitterDistance = 99;
+            this.splitContainer1.Size = new System.Drawing.Size(625, 374);
+            this.splitContainer1.SplitterDistance = 97;
             this.splitContainer1.TabIndex = 4;
             // 
             // proGrid
@@ -499,7 +499,7 @@ namespace Paint.Views
             this.proGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.proGrid.Location = new System.Drawing.Point(0, 0);
             this.proGrid.Name = "proGrid";
-            this.proGrid.Size = new System.Drawing.Size(99, 374);
+            this.proGrid.Size = new System.Drawing.Size(97, 374);
             this.proGrid.TabIndex = 0;
             this.proGrid.ViewBorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.proGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pproGrid_PropertyValueChanged);

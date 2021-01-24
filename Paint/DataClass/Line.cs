@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Numerics;
 using System.Text;
+using System.Windows;
 
 namespace Paint.DataClass
 {
     internal class Line : Shape
     {
+       
         [Category(Categories.LOCATION)]
         public Point Middle { get; }
         [Category(Categories.PROPERTIES)]
@@ -19,10 +22,12 @@ namespace Paint.DataClass
         public Line()
         {
             this.Name = PaintType.Line.ToString();
+          
+
         }
         static Line()
         {
-            
+          
         }
        
         public Line(Point start, Point end, Color color, int lineWidth)
@@ -118,9 +123,9 @@ namespace Paint.DataClass
                     rectang.Draw(graphics);
 
                     // rectang.FillDraw(graphics);
-                    Textx txtS = new Textx(graphics, Start, Start.ToString(), Angle);
-                    Textx txtE = new Textx(graphics, End, End.ToString(), Angle);
-                    Textx txtL = new Textx(graphics, Middle, $"Length={ this.Length};\nAngle ={Angle};\nWidth={this.LineWidth}", Angle);
+                    Text txtS = new Text(graphics, Start, Start.ToString(), Angle);
+                    Text txtE = new Text(graphics, End, End.ToString(), Angle);
+                    Text txtL = new Text(graphics, Middle, $"Length={ this.Length};\nAngle ={Angle};\nWidth={this.LineWidth}", Angle);
 
                 }
                 else

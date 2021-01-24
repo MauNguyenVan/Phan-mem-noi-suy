@@ -6,13 +6,7 @@ using System.Threading.Tasks;
 
 namespace Paint.DataClass
 {
-    internal enum PaintType
+    class FreeLine
     {
-        None,
-        Line,
-        FreeLine,
-        Rectangle,
-        Circle,
-
     }
 }

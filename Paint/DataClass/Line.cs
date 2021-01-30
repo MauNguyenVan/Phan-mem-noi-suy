@@ -11,25 +11,48 @@ namespace Paint.DataClass
 {
     internal class Line : Shape
     {
+     
+        private Point start;
+        private Point end;
+        [Category(Categories.LOCATION)]
+        public override Point Start
+        {
+            get
+            { return start; }
+            set
+            {
+                start = value;
+                UpdateProperties();
+            }
+        }
        
         [Category(Categories.LOCATION)]
-        public Point Middle { get; }
+        public override Point End
+        {
+            get
+            { return end; }
+            set
+            {
+                end = value;
+                UpdateProperties();
+            }
+        }
+        public Point Middle
+        {
+            get;
+            private set;
+        }
         [Category(Categories.PROPERTIES)]
-        public float Length { get; }
+        public float Length { get; private set; }
         [Category(Categories.PROPERTIES)]
-        public float Angle { get; }
+        public float Angle { get; private set; }
         internal BoundingBox BoundingBox { get; }
         public Line()
         {
             this.Name = PaintType.Line.ToString();
-          
+        }
 
-        }
-        static Line()
-        {
-          
-        }
-       
+
         public Line(Point start, Point end, Color color, int lineWidth)
         {
             if (start != end)
@@ -38,17 +61,21 @@ namespace Paint.DataClass
                 Shape.CurrentId = this.Id;
                 this.IsVisible = true;
                 this.Name = PaintType.Line.ToString();
-                this.Start = start;
-                this.End = end;
+                this.start = start;
+                this.end = end;
                 this.Color = color;
                 this.LineWidth = lineWidth;
                 this.BoundingBox = new BoundingBox(new Point[] { Start, End });
 
-                Middle = GetMiddlePoint();
-                this.Length = GetLengthLine();
-                this.Angle = GetAngleLine();
+                UpdateProperties();
             }
 
+        }
+        private void UpdateProperties()
+        {
+            Middle = GetMiddlePoint();
+            this.Length = GetLengthLine();
+            this.Angle = GetAngleLine();
         }
         public bool IsVertical()
         {

@@ -156,7 +156,7 @@ namespace Paint.Views
                 pnPaint.Cursor = Cursors.Default;
             }
         }
-
+        Rectang rectang;
         private void pnPaint_MouseMove(object sender, MouseEventArgs e)
         {
             endPoint = e.Location;
@@ -186,18 +186,11 @@ namespace Paint.Views
             }
             else if (paintType == PaintType.None)
             {
-                // if(e.Location==graphics. )
-                foreach (var line in lines)
-                {
-                    if (BoundingBox.IsPointInBouding(e.Location, line.BoundingBox))
-                    {
-                        pnPaint.Cursor = Cursors.SizeAll;
-                    }
-                    else
-                    {
-                        pnPaint.Cursor = Cursors.Default;
-                    }
-                }
+                rectang = new Rectang(startPoint,endPoint);
+             
+                rectang.Pen = pen;
+                rectang.Draw(graphics);
+                this.pnPaint.Invalidate();
             }
             freeLines.Add(new FreeLine(freelines.ToArray()));
         }
@@ -309,6 +302,7 @@ namespace Paint.Views
       
         private void pproGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
+            this.proGrid.Refresh();
             pnPaint.Invalidate();
 
         }

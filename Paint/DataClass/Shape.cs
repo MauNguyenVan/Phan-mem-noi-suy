@@ -11,6 +11,7 @@ namespace Paint.DataClass
 {
     internal class Shape
     {
+        protected const int SizePointHighlight = 6;
         internal static int CurrentId = 0;
         [Category(Categories.IDENTITY)]
         [Description("Id of element")]

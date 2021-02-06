@@ -18,10 +18,12 @@ namespace Paint.Views
         private Graphics graphics = default;
         private Pen pen;
         private float zoom = 1;
+        private bool isMouseDown;
         // private Brush brush;
         private Color color = Color.Black;
 
         private List<Line> lines = new List<Line>();
+        private List<Rectang> rectangs = new ();
         private List<FreeLine> freeLines = new List<FreeLine>();
         private Line line;
         private Point startPoint, endPoint;
@@ -29,7 +31,7 @@ namespace Paint.Views
         public FrmMain()
         {
             InitializeComponent();
-
+            pnPaint.BackColor = default;
             pen = new Pen(color);
 
             foreach (string style in Enum.GetNames(typeof(DashStyle)))
@@ -44,6 +46,7 @@ namespace Paint.Views
             this.WindowState = FormWindowState.Maximized;
 
             graphics = pnPaint.CreateGraphics();
+            
 
         }
 
@@ -69,6 +72,14 @@ namespace Paint.Views
                     
                     break;
                 case PaintType.Rectangle:
+                    foreach (var rec in rectangs)
+                    {
+                        //pen.Color = rec.Color;
+                        //pen.Width = rec.LineWidth;
+                        //pen.DashStyle = rec.DashStyle;
+
+                       // rec.Draw(graphics);
+                    }
                     break;
 
                 case PaintType.Circle:
@@ -83,6 +94,7 @@ namespace Paint.Views
             //  graphics.Dispose();
             lsbElement.Items.Clear();
             lsbElement.Items.AddRange(lines.ToArray());
+            lsbElement.Items.AddRange(rectangs.ToArray());
         }
 
         private void btnLine_Click(object sender, EventArgs e)
@@ -121,6 +133,7 @@ namespace Paint.Views
 
         private void pnPaint_MouseDown(object sender, MouseEventArgs e)
         {
+            isMouseDown = true;
             if (e.Button == MouseButtons.Left)
             {
                 startPoint = e.Location;
@@ -149,50 +162,73 @@ namespace Paint.Views
                     lines.Add(line);
                     this.pnPaint.Invalidate();
                 }
+                else if(paintType == PaintType.Rectangle)
+                {
+                    Rectang rectang = new Rectang(startPoint, endPoint) { IsSelected = true, };
+                    rectang.Pen = pen;
+                    rectang.Draw(graphics);
+                    //rectangs.Add(rectang);
+
+                    this.pnPaint.Update();
+                }
                 
             }
             else if (e.Button == MouseButtons.Middle)
             {
                 pnPaint.Cursor = Cursors.Default;
+                
             }
         }
-        Rectang rectang;
+     
         private void pnPaint_MouseMove(object sender, MouseEventArgs e)
         {
+            isMouseDown = false;
             endPoint = e.Location;
             List<Point> freelines = new List<Point>();
-            if (e.Button == MouseButtons.Left
-                && paintType == PaintType.Line
-                && startPoint != endPoint)
+            switch (e.Button)
             {
-                // this.Cursor = new Cursor(Cursor.Current.Handle);
-              //  Cursor.Position =e.Location ;// new Point(startPoint.X, endPoint.Y);
-               // endPoint = Cursor.Position;
-                // Cursor.Clip = new Rectangle(this.Location, this.Size);
+                case MouseButtons.Left:
 
-                Line newLine = new Line(startPoint, endPoint, color, 3);
-                newLine.Draw(graphics);
-                this.pnPaint.Update();
-            }
-            else if (e.Button == MouseButtons.Left&&paintType == PaintType.FreeLine)
-            {
+                    if (paintType == PaintType.Line)
+                    {
+                        // this.Cursor = new Cursor(Cursor.Current.Handle);
+                        //  Cursor.Position =e.Location ;// new Point(startPoint.X, endPoint.Y);
+                        // endPoint = Cursor.Position;
+                        // Cursor.Clip = new Rectangle(this.Location, this.Size);
 
-               // graphics.DrawLine(pen, startPoint, endPoint);
-                freelines.Add(startPoint);
-                startPoint = endPoint;
-                
-               // pnPaint.Invalidate();
+                        Line newLine = new Line(startPoint, endPoint, color, 3);
+                        newLine.Draw(graphics);
+                        this.pnPaint.Update();
+                    }
+                    else if ( paintType == PaintType.FreeLine)
+                    {
+                        // graphics.DrawLine(pen, startPoint, endPoint);
+                        freelines.Add(startPoint);
+                        startPoint = endPoint;
 
+                        // pnPaint.Invalidate();
+
+                    }
+                    else if (paintType == PaintType.None )
+                    {
+                       
+                        
+                    }
+                    freeLines.Add(new FreeLine(freelines.ToArray()));
+                    break;
+                case MouseButtons.None:
+                    break;
+                case MouseButtons.Right:
+                    break;
+                case MouseButtons.Middle:
+                    break;
+                case MouseButtons.XButton1:
+                    break;
+                case MouseButtons.XButton2:
+                    break;
+            
             }
-            else if (paintType == PaintType.None)
-            {
-                rectang = new Rectang(startPoint,endPoint);
-             
-                rectang.Pen = pen;
-                rectang.Draw(graphics);
-                this.pnPaint.Invalidate();
-            }
-            freeLines.Add(new FreeLine(freelines.ToArray()));
+           
         }
 
         private void pnPaint_Resize(object sender, EventArgs e)
@@ -242,7 +278,7 @@ namespace Paint.Views
 
         private void btnNone_Click(object sender, EventArgs e)
         {
-            paintType = PaintType.None;
+            paintType = PaintType.Rectangle;
             //  this.pnPaint.Invalidate();
 
 
@@ -260,6 +296,7 @@ namespace Paint.Views
 
         private void lsbElement_SelectedIndexChanged(object sender, EventArgs e)
         {
+          
             ListBox.SelectedObjectCollection selectedItems = lsbElement.SelectedItems;
             int selectedIndex = lsbElement.SelectedIndex;
             if (lsbElement.SelectedIndex != -1)
@@ -273,10 +310,12 @@ namespace Paint.Views
                     if (i >= selectedIndex && i < selectedIndex + selectedItems.Count)
                     {
                         lines[i].IsSelected = true;
+                     
                     }
                     else
                     {
                         lines[i].IsSelected = false;
+                       
                     }
                 }
 

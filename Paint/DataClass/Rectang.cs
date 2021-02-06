@@ -10,9 +10,11 @@ namespace Paint.DataClass
 {
     internal class Rectang : Shape
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
-       public BoundingBox BoundingBox { get; }
+        public int Width { get; }
+        public int Height { get;  }
+        public int Area { get; }
+        public int Primeter { get; }
+        public BoundingBox BoundingBox { get; }
         internal Rectang()
         { }
         public Rectang(Point startPoint, Point endPoint)
@@ -37,29 +39,51 @@ namespace Paint.DataClass
         {
             return Width < Height ? Width : Height;
         }
+        private int GetPrimeter()
+        {
+            return 2 * (Width + Height);
+        }
+        private int GetArea()
+        {
+            return Width * Height;
+        }
+        private void DrawBorder(Graphics graphics)
+        {
+            const int size = Shape.SizePointHighlight;
+           // Draw(graphics);
+            DrawFromCenter(graphics, BoundingBox.TopLeft, size, size);
+            DrawFromCenter(graphics, BoundingBox.BottomRight, size, size);
+            DrawFromCenter(graphics, BoundingBox.BottomLeft, size, size);
+            DrawFromCenter(graphics, BoundingBox.TopRight, size, size);
+        }
         public override void Draw(Graphics graphics)
         {
-            Size size = new Size(Width, Height);
-            Rectangle rectangle = new Rectangle(BoundingBox.Min, size);
+            Rectangle rectangle = this.BoundingBox.ToRectangle();
             graphics.DrawRectangle(Pen, rectangle);
+            if (IsSelected)
+            {
+                DrawBorder(graphics);
+            }
+            
         }
 
         public  void FillDraw(Graphics graphics)
         {
-            Size size = new Size(Width, Height);
-            Rectangle rectangle = new Rectangle(BoundingBox.Min, size);
+            Rectangle rectangle = this.BoundingBox.ToRectangle();
             graphics.FillRectangle(SolidBrush, rectangle);
+            //DrawBorder(graphics);
         }
 
-        public void DrawFromCenter(Graphics graphics, Point centerPoint, int width, int height)
+        public static void DrawFromCenter(Graphics graphics, Point centerPoint, int width, int height)
         {
+            SolidBrush solidBrush = new SolidBrush(Color.Green);
             int startX = (int)(centerPoint.X - 0.5 * width);
             int startY = (int)(centerPoint.Y - 0.5 * height);
             int endX = startX + width;
             int endY = startY + height;
-            Rectang square = new Rectang(Start = new Point(startX, startY), End = new Point(endX, endY));
-            square.FillDraw(graphics);
-           
+            Rectangle rectangle = new Rectangle( new Point(startX, startY), new(width,height));
+            graphics.FillRectangle(solidBrush, rectangle);
+
         }
         public override bool IsHit(Point point)
         {

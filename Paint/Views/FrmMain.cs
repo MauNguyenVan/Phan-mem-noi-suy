@@ -9,7 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Paint.DataClass;
+
 # nullable enable
+
 namespace Paint.Views
 {
     public partial class FrmMain : Form
@@ -18,6 +20,7 @@ namespace Paint.Views
         private Graphics graphics = default;
         private Pen pen;
         private float zoom = 1;
+
         // private Brush brush;
         private Color color = Color.Black;
 
@@ -44,7 +47,6 @@ namespace Paint.Views
             this.WindowState = FormWindowState.Maximized;
 
             graphics = pnPaint.CreateGraphics();
-
         }
 
         private void pnPaint_Paint(object sender, PaintEventArgs e)
@@ -65,9 +67,11 @@ namespace Paint.Views
                     }
 
                     break;
+
                 case PaintType.FreeLine:
-                    
+
                     break;
+
                 case PaintType.Rectangle:
                     break;
 
@@ -140,23 +144,24 @@ namespace Paint.Views
             {
                 endPoint = e.Location;
                 if (paintType == PaintType.Line && startPoint != endPoint)
-                {  
+                {
                     line = new Line(startPoint, endPoint, color, decimal.ToInt32(numLightWidth.Value))
                     {
                         IsSelected = false,
                         DashStyle = pen.DashStyle,
                     };
                     lines.Add(line);
-                    this.pnPaint.Invalidate();
+                    this.pnPaint.Update();
                 }
-                
             }
             else if (e.Button == MouseButtons.Middle)
             {
                 pnPaint.Cursor = Cursors.Default;
             }
         }
-        Rectang rectang;
+
+        private Rectang rectang;
+
         private void pnPaint_MouseMove(object sender, MouseEventArgs e)
         {
             endPoint = e.Location;
@@ -166,28 +171,25 @@ namespace Paint.Views
                 && startPoint != endPoint)
             {
                 // this.Cursor = new Cursor(Cursor.Current.Handle);
-              //  Cursor.Position =e.Location ;// new Point(startPoint.X, endPoint.Y);
-               // endPoint = Cursor.Position;
+                //  Cursor.Position =e.Location ;// new Point(startPoint.X, endPoint.Y);
+                // endPoint = Cursor.Position;
                 // Cursor.Clip = new Rectangle(this.Location, this.Size);
-
                 Line newLine = new Line(startPoint, endPoint, color, 3);
                 newLine.Draw(graphics);
                 this.pnPaint.Update();
             }
-            else if (e.Button == MouseButtons.Left&&paintType == PaintType.FreeLine)
+            else if (e.Button == MouseButtons.Left && paintType == PaintType.FreeLine)
             {
-
-               // graphics.DrawLine(pen, startPoint, endPoint);
+                // graphics.DrawLine(pen, startPoint, endPoint);
                 freelines.Add(startPoint);
                 startPoint = endPoint;
-                
-               // pnPaint.Invalidate();
 
+                // pnPaint.Invalidate();
             }
             else if (paintType == PaintType.None)
             {
-                rectang = new Rectang(startPoint,endPoint);
-             
+                rectang = new Rectang(startPoint, endPoint);
+
                 rectang.Pen = pen;
                 rectang.Draw(graphics);
                 this.pnPaint.Invalidate();
@@ -199,6 +201,7 @@ namespace Paint.Views
         {
             pnPaint.CreateGraphics();
         }
+
         private void PnPaint_MouseWheel(object sender, MouseEventArgs e)
         {
             //  graphics.RenderingOrigin = e.Location;
@@ -218,6 +221,7 @@ namespace Paint.Views
             graphics.ScaleTransform(zoom, zoom, MatrixOrder.Prepend);
             pnPaint.Invalidate();
         }
+
         private void btnDelete_Click(object sender, EventArgs e)
         {
             Delete();
@@ -244,8 +248,6 @@ namespace Paint.Views
         {
             paintType = PaintType.None;
             //  this.pnPaint.Invalidate();
-
-
         }
 
         private void lsbElement_DoubleClick(object sender, EventArgs e)
@@ -282,10 +284,9 @@ namespace Paint.Views
 
                 pnPaint.Invalidate();
                 this.proGrid.SelectedObjects = lines.Where(x => x.IsSelected).ToArray();
-
             }
-
         }
+
         private bool SelectListBox(ref int i)
         {
             if (i == 1)
@@ -299,25 +300,20 @@ namespace Paint.Views
             i++;
         }
 
-      
         private void pproGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            this.proGrid.Refresh();
             pnPaint.Invalidate();
-
         }
 
         private void pnPaint_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-
-
         }
 
         private void btnFreeLine_Click(object sender, EventArgs e)
         {
             paintType = PaintType.FreeLine;
-           
         }
+
         private void proGrid_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Test1");
@@ -326,7 +322,6 @@ namespace Paint.Views
         private void proGrid_MouseClick(object sender, MouseEventArgs e)
         {
             MessageBox.Show("Test");
-          
         }
 
         private void ClearAllSelection()
@@ -336,7 +331,6 @@ namespace Paint.Views
             {
                 lines[i].IsSelected = false;
             }
-
         }
     }
 }

@@ -7,11 +7,12 @@ using System.Numerics;
 using System.Text;
 using System.Windows;
 
+#nullable enable
+
 namespace Paint.DataClass
 {
     internal class Line : Shape
     {
-     
         private Point start;
         private Point end;
         [Category(Categories.LOCATION)]
@@ -25,7 +26,7 @@ namespace Paint.DataClass
                 UpdateProperties();
             }
         }
-       
+
         [Category(Categories.LOCATION)]
         public override Point End
         {
@@ -47,11 +48,11 @@ namespace Paint.DataClass
         [Category(Categories.PROPERTIES)]
         public float Angle { get; private set; }
         internal BoundingBox BoundingBox { get; }
+
         public Line()
         {
             this.Name = PaintType.Line.ToString();
         }
-
 
         public Line(Point start, Point end, Color color, int lineWidth)
         {
@@ -61,15 +62,14 @@ namespace Paint.DataClass
                 Shape.CurrentId = this.Id;
                 this.IsVisible = true;
                 this.Name = PaintType.Line.ToString();
-                this.start = start;
-                this.end = end;
+                this.Start = start;
+                this.End = end;
                 this.Color = color;
                 this.LineWidth = lineWidth;
                 this.BoundingBox = new BoundingBox(new Point[] { Start, End });
 
                 UpdateProperties();
             }
-
         }
         private void UpdateProperties()
         {
@@ -86,6 +86,7 @@ namespace Paint.DataClass
             }
             return isVertical;
         }
+
         public bool IsHorizontal()
         {
             bool isHorizontal = false;
@@ -118,10 +119,12 @@ namespace Paint.DataClass
                 IsSelected = IsSelected,
             };
         }
+
         public void FillDraw(Graphics graphics)
         {
             throw new NotImplementedException();
         }
+
         public override void Draw(Graphics graphics)
         {
             //  using GraphicsPath graphicPath = GraphicsPath;
@@ -137,8 +140,10 @@ namespace Paint.DataClass
                     };
                     SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
                     graphics.DrawPath(pen, GraphicsPath);
-                    Rectang square = new Rectang();
-                    square.SolidBrush = newSolidBrush;
+                    Rectang square = new Rectang
+                    {
+                        SolidBrush = newSolidBrush
+                    };
                     square.DrawFromCenter(graphics, Start, size, size);
                     square.DrawFromCenter(graphics, End, size, size);
                     square.DrawFromCenter(graphics, Middle, size, size);
@@ -153,7 +158,6 @@ namespace Paint.DataClass
                     Text txtS = new Text(graphics, Start, Start.ToString(), Angle);
                     Text txtE = new Text(graphics, End, End.ToString(), Angle);
                     Text txtL = new Text(graphics, Middle, $"Length={ this.Length};\nAngle ={Angle};\nWidth={this.LineWidth}", Angle);
-
                 }
                 else
                 {
@@ -164,15 +168,13 @@ namespace Paint.DataClass
                     graphics.DrawPath(pen, GraphicsPath);
                 }
             }
-
         }
 
         public override bool IsHit(Point point)
         {
-            bool res = false;
             using GraphicsPath graphicPath = GraphicsPath;
             using Pen pen = new Pen(Color, LineWidth + 3);
-            res = graphicPath.IsOutlineVisible(point, pen);
+            bool res = graphicPath.IsOutlineVisible(point, pen);
             return res;
         }
 

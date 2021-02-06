@@ -15,6 +15,7 @@ namespace Paint.DataClass
     {
         private Point start;
         private Point end;
+
         [Category(Categories.LOCATION)]
         public override Point Start
         {
@@ -38,15 +39,19 @@ namespace Paint.DataClass
                 UpdateProperties();
             }
         }
+
         public Point Middle
         {
             get;
             private set;
         }
+
         [Category(Categories.PROPERTIES)]
         public float Length { get; private set; }
+
         [Category(Categories.PROPERTIES)]
         public float Angle { get; private set; }
+
         internal BoundingBox BoundingBox { get; }
 
         public Line()
@@ -71,12 +76,14 @@ namespace Paint.DataClass
                 UpdateProperties();
             }
         }
+
         private void UpdateProperties()
         {
             Middle = GetMiddlePoint();
             this.Length = GetLengthLine();
             this.Angle = GetAngleLine();
         }
+
         public bool IsVertical()
         {
             bool isVertical = false;

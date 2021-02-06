@@ -24,7 +24,7 @@ namespace Paint.DataClass
             BoundingBox = new BoundingBox(new Point[] { Start, End });
             Width = BoundingBox.Width;
             Height = BoundingBox.Height;
-            SolidBrush = new SolidBrush(Color.Green);
+            SolidBrush = new SolidBrush(Color.DarkRed);
         }
 
       

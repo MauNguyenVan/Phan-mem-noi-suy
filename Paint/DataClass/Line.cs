@@ -147,11 +147,11 @@ namespace Paint.DataClass
                     };
                     SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
                     graphics.DrawPath(pen, GraphicsPath);
-                    Rectang square = new Rectang();
-                    square.SolidBrush = newSolidBrush;
-                    square.DrawFromCenter(graphics, Start, size, size);
-                    square.DrawFromCenter(graphics, End, size, size);
-                    square.DrawFromCenter(graphics, Middle, size, size);
+                  
+                   // Rectang.SolidBrush = newSolidBrush;
+                    Rectang.DrawFromCenter(graphics, Start, size, size);
+                    Rectang.DrawFromCenter(graphics, End, size, size);
+                    Rectang.DrawFromCenter(graphics, Middle, size, size);
                     Pen penRec = new Pen(Color.Gray) { DashStyle = DashStyle.Dash };
                     Rectang rectang = new Rectang(this.Start, this.End)
                     {

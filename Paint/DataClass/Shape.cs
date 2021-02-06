@@ -19,9 +19,9 @@ namespace Paint.DataClass
         [Category(Categories.IDENTITY)]
         public string Name { get; protected set; } = "Unknow";
         [Category(Categories.LOCATION)]
-        public Point Start { get; set; }
+        public virtual Point Start { get; set; }
         [Category(Categories.LOCATION)]
-        public Point End { get; set; }
+        public virtual Point  End { get; set; }
         [Category(Categories.GRAPHICS)]
         public Color Color { get; set; }
         [Category(Categories.GRAPHICS)]

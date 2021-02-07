@@ -40,10 +40,10 @@ namespace Paint.DataClass
             }
         }
 
+        [Category(Categories.LOCATION)]
         public Point Middle
         {
-            get;
-            private set;
+            get; private set;
         }
 
         [Category(Categories.PROPERTIES)]
@@ -54,23 +54,16 @@ namespace Paint.DataClass
 
         internal BoundingBox BoundingBox { get; }
 
-        public Line()
-        {
-            this.Name = PaintType.Line.ToString();
-        }
-
-        public Line(Point start, Point end, Color color, int lineWidth)
+        public Line(Pen pen, Point start, Point end)
         {
             if (start != end)
             {
-                this.Id = CurrentId + 1;
-                Shape.CurrentId = this.Id;
                 this.IsVisible = true;
                 this.Name = PaintType.Line.ToString();
                 this.Start = start;
                 this.End = end;
-                this.Color = color;
-                this.LineWidth = lineWidth;
+                this.Pen = pen;
+
                 this.BoundingBox = new BoundingBox(new Point[] { Start, End });
 
                 UpdateProperties();
@@ -114,19 +107,6 @@ namespace Paint.DataClass
             }
         }
 
-        public override object Clone()
-        {
-            return new Line()
-            {
-                Name = Name,
-                Start = Start,
-                End = End,
-                LineWidth = LineWidth,
-                Color = Color,
-                IsSelected = IsSelected,
-            };
-        }
-
         public void FillDraw(Graphics graphics)
         {
             throw new NotImplementedException();
@@ -140,15 +120,15 @@ namespace Paint.DataClass
                 const int size = Shape.SizePointHighlight;
                 if (IsSelected)
                 {
-                    int minSize = LineWidth <= 3 ? 3 : LineWidth + 2;
+                    int minSize = Pen.Width <= 3 ? 3 : (int)Pen.Width + 2;
                     using Pen pen = new Pen(Color.Yellow, minSize)
                     {
                         DashStyle = this.DashStyle,
                     };
                     SolidBrush newSolidBrush = new SolidBrush(Color.Yellow);
                     graphics.DrawPath(pen, GraphicsPath);
-                  
-                   // Rectang.SolidBrush = newSolidBrush;
+
+                    // Rectang.SolidBrush = newSolidBrush;
                     Rectang.DrawFromCenter(graphics, Start, size, size);
                     Rectang.DrawFromCenter(graphics, End, size, size);
                     Rectang.DrawFromCenter(graphics, Middle, size, size);
@@ -162,26 +142,22 @@ namespace Paint.DataClass
                     // rectang.FillDraw(graphics);
                     Text txtS = new Text(graphics, Start, Start.ToString(), Angle);
                     Text txtE = new Text(graphics, End, End.ToString(), Angle);
-                    Text txtL = new Text(graphics, Middle, $"Length={ this.Length};\nAngle ={Angle};\nWidth={this.LineWidth}", Angle);
+                    Text txtL = new Text(graphics, Middle, $"Length={ this.Length};\nAngle ={Angle};\nWidth={this.Pen.Width}", Angle);
                 }
                 else
                 {
-                    using Pen pen = new Pen(Color, LineWidth)
-                    {
-                        DashStyle = this.DashStyle,
-                    };
-                    graphics.DrawPath(pen, GraphicsPath);
+                    graphics.DrawPath(Pen, GraphicsPath);
                 }
             }
         }
 
-        public override bool IsHit(Point point)
-        {
-            using GraphicsPath graphicPath = GraphicsPath;
-            using Pen pen = new Pen(Color, LineWidth + 3);
-            bool res = graphicPath.IsOutlineVisible(point, pen);
-            return res;
-        }
+        //public override bool IsHit(Point point)
+        ////{
+        ////    using GraphicsPath graphicPath = GraphicsPath;
+        ////    using Pen pen = new Pen(Color, LineWidth + 3);
+        ////    bool res = graphicPath.IsOutlineVisible(point, pen);
+        //   // return res;
+        //}
 
         public override void Move(Point distance)
         {

@@ -55,6 +55,8 @@ namespace Paint.Views
             this.WindowState = FormWindowState.Maximized;
 
             graphics = pnPaint.CreateGraphics();
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            this.DoubleBuffered = true;
         }
 
         private void pnPaint_Paint(object sender, PaintEventArgs e)
@@ -148,6 +150,42 @@ namespace Paint.Views
             // this.pnPaint.Invalidate();
         }
 
+        private void pnPaint_MouseMove(object sender, MouseEventArgs e)
+        {
+            lblCursorPosition.Text = $"X={e.Location.X}; Y={e.Location.Y}";
+            endPoint = e.Location;
+            List<Point> freelines = new List<Point>();
+            if (e.Button == MouseButtons.Left)
+            {
+                if (paintType == PaintType.Line)
+                {
+                    pnPaint.Refresh();
+                    graphics.DrawLine(pen, startPoint, endPoint);
+                }
+                else if (paintType == PaintType.FreeLine)
+                {
+                    // graphics.DrawLine(pen, startPoint, endPoint);
+                    //   freelines.Add(startPoint);
+                    // startPoint = endPoint;
+
+                    // pnPaint.Invalidate();
+                }
+                else if (paintType == PaintType.None)
+                {
+                    //rectang = new Rectang(startPoint, endPoint);
+
+                    //rectang.Pen = pen;
+                    //rectang.Draw(graphics);
+                    //this.pnPaint.Invalidate();
+                }
+                //  shapes.Add(new FreeLine(freelines.ToArray()));
+            }
+        }
+
+        private void pnPaint_MouseHover(object sender, EventArgs e)
+        {
+        }
+
         private void pnPaint_MouseUp(object sender, MouseEventArgs e)
         {
             isMouseDown = false;
@@ -168,43 +206,6 @@ namespace Paint.Views
             else if (e.Button == MouseButtons.Middle)
             {
                 pnPaint.Cursor = Cursors.Default;
-            }
-        }
-
-        private void pnPaint_MouseMove(object sender, MouseEventArgs e)
-        {
-            isMouseDown = false;
-            endPoint = e.Location;
-            List<Point> freelines = new List<Point>();
-            if (e.Button == MouseButtons.Left)
-            {
-                if (paintType == PaintType.Line)
-                {
-                    pnPaint.Refresh();
-                    graphics.DrawLine(pen, startPoint, endPoint);
-
-                    // graphics.DrawLine(pen, startPoint, endPoint);
-
-                    //this.pnPaint.Invalidate();
-                    //  this.pnPaint.Update();
-                }
-                else if (paintType == PaintType.FreeLine)
-                {
-                    // graphics.DrawLine(pen, startPoint, endPoint);
-                    //   freelines.Add(startPoint);
-                    // startPoint = endPoint;
-
-                    // pnPaint.Invalidate();
-                }
-                else if (paintType == PaintType.None)
-                {
-                    //rectang = new Rectang(startPoint, endPoint);
-
-                    //rectang.Pen = pen;
-                    //rectang.Draw(graphics);
-                    //this.pnPaint.Invalidate();
-                }
-                //  shapes.Add(new FreeLine(freelines.ToArray()));
             }
         }
 

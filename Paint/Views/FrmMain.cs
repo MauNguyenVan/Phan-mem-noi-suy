@@ -34,6 +34,12 @@ namespace Paint.Views
         {
             InitializeComponent();
             pnPaint.BackColor = default;
+
+            //pnPaint.AutoScroll = true;
+            //pnPaint.HorizontalScroll.Enabled = true;
+            //pnPaint.HorizontalScroll.Visible = true;
+            // pnPaint.HorizontalScroll.Maximum = 0;
+            pnPaint.AutoScroll = true;
             pen = new Pen(color);
 
             foreach (string style in Enum.GetNames(typeof(DashStyle)))
@@ -157,7 +163,7 @@ namespace Paint.Views
                     };
                     shapes.Add(line);
                 }
-                pnPaint.Invalidate();
+                pnPaint.Refresh();
             }
             else if (e.Button == MouseButtons.Middle)
             {
@@ -174,9 +180,13 @@ namespace Paint.Views
             {
                 if (paintType == PaintType.Line)
                 {
+                    pnPaint.Refresh();
                     graphics.DrawLine(pen, startPoint, endPoint);
+
+                    // graphics.DrawLine(pen, startPoint, endPoint);
+
                     //this.pnPaint.Invalidate();
-                    // this.pnPaint.Update();
+                    //  this.pnPaint.Update();
                 }
                 else if (paintType == PaintType.FreeLine)
                 {

@@ -39,7 +39,7 @@ namespace Paint.Views
             //pnPaint.HorizontalScroll.Enabled = true;
             //pnPaint.HorizontalScroll.Visible = true;
             // pnPaint.HorizontalScroll.Maximum = 0;
-            pnPaint.AutoScroll = true;
+
             pen = new Pen(color);
 
             foreach (string style in Enum.GetNames(typeof(DashStyle)))
@@ -55,6 +55,7 @@ namespace Paint.Views
             this.WindowState = FormWindowState.Maximized;
 
             graphics = pnPaint.CreateGraphics();
+            // MessageBox.Show(graphics.PageUnit.ToString());
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             this.DoubleBuffered = true;
         }
@@ -67,7 +68,7 @@ namespace Paint.Views
                 case PaintType.Line:
 
                     //graphics.DrawLine(pen, startPoint, endPoint);
-                    foreach (var ln in shapes)
+                    foreach (Line ln in shapes)
                     {
                         ln.Draw(graphics);
                     }
@@ -90,8 +91,8 @@ namespace Paint.Views
                 default:
                     break;
             }
-            // graphics.Flush();
-            //  graphics.Dispose();
+            //graphics.Flush();
+            // graphics.Dispose();
             lsbElement.Items.Clear();
             lsbElement.Items.AddRange(shapes.ToArray());
         }
@@ -134,9 +135,7 @@ namespace Paint.Views
         private void pnPaint_MouseDown(object sender, MouseEventArgs e)
         {
             isMouseDown = true;
-            // lsbElement.SelectedItem = null;
-            //pnPaint.Invalidate();
-            // proGrid.Update();
+
             if (e.Button == MouseButtons.Left)
             {
                 startPoint = e.Location;
@@ -182,14 +181,11 @@ namespace Paint.Views
             }
         }
 
-        private void pnPaint_MouseHover(object sender, EventArgs e)
-        {
-        }
-
         private void pnPaint_MouseUp(object sender, MouseEventArgs e)
         {
             isMouseDown = false;
             endPoint = e.Location;
+
             bool mouseLocationChange = startPoint != endPoint ? true : false;
             if (e.Button == MouseButtons.Left && mouseLocationChange)
             {
@@ -198,6 +194,7 @@ namespace Paint.Views
                     line = new Line(pen, startPoint, endPoint)
                     {
                         IsSelected = false,
+                        IsVisible = true,
                     };
                     shapes.Add(line);
                 }
@@ -207,6 +204,7 @@ namespace Paint.Views
             {
                 pnPaint.Cursor = Cursors.Default;
             }
+            // pnPaint.Invalidate();
         }
 
         private void pnPaint_Resize(object sender, EventArgs e)

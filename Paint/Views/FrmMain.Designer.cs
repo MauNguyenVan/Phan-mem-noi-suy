@@ -76,7 +76,7 @@ namespace Paint.Views
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lblCursorPosition = new System.Windows.Forms.Label();
             this.proGrid = new System.Windows.Forms.PropertyGrid();
-            this.pnPaint = new System.Windows.Forms.Panel();
+            this.pnPaint = new System.Windows.Forms.PictureBox();
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuMove = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCopy = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,6 +93,7 @@ namespace Paint.Views
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pnPaint)).BeginInit();
             this.mnuContext.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,7 +102,7 @@ namespace Paint.Views
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 258F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 266F));
             this.tableLayoutPanel1.Controls.Add(this.pnRibbon, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lsbElement, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 0);
@@ -131,7 +132,7 @@ namespace Paint.Views
             this.pnRibbon.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnRibbon.Location = new System.Drawing.Point(4, 4);
             this.pnRibbon.Name = "pnRibbon";
-            this.pnRibbon.Size = new System.Drawing.Size(590, 94);
+            this.pnRibbon.Size = new System.Drawing.Size(582, 94);
             this.pnRibbon.TabIndex = 1;
             // 
             // btnFreeLine
@@ -220,7 +221,7 @@ namespace Paint.Views
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(590, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(582, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -451,10 +452,10 @@ namespace Paint.Views
             this.lsbElement.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lsbElement.FormattingEnabled = true;
             this.lsbElement.ItemHeight = 15;
-            this.lsbElement.Location = new System.Drawing.Point(601, 105);
+            this.lsbElement.Location = new System.Drawing.Point(593, 105);
             this.lsbElement.Name = "lsbElement";
             this.lsbElement.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lsbElement.Size = new System.Drawing.Size(252, 374);
+            this.lsbElement.Size = new System.Drawing.Size(260, 374);
             this.lsbElement.TabIndex = 2;
             this.lsbElement.SelectedIndexChanged += new System.EventHandler(this.lsbElement_SelectedIndexChanged);
             this.lsbElement.DoubleClick += new System.EventHandler(this.lsbElement_DoubleClick);
@@ -463,9 +464,9 @@ namespace Paint.Views
             // 
             this.panel1.Controls.Add(this.button1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(601, 4);
+            this.panel1.Location = new System.Drawing.Point(593, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(252, 94);
+            this.panel1.Size = new System.Drawing.Size(260, 94);
             this.panel1.TabIndex = 3;
             // 
             // button1
@@ -492,8 +493,8 @@ namespace Paint.Views
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pnPaint);
-            this.splitContainer1.Size = new System.Drawing.Size(590, 374);
-            this.splitContainer1.SplitterDistance = 62;
+            this.splitContainer1.Size = new System.Drawing.Size(582, 374);
+            this.splitContainer1.SplitterDistance = 54;
             this.splitContainer1.TabIndex = 4;
             // 
             // lblCursorPosition
@@ -512,7 +513,7 @@ namespace Paint.Views
             this.proGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.proGrid.Location = new System.Drawing.Point(0, 0);
             this.proGrid.Name = "proGrid";
-            this.proGrid.Size = new System.Drawing.Size(62, 374);
+            this.proGrid.Size = new System.Drawing.Size(54, 374);
             this.proGrid.TabIndex = 0;
             this.proGrid.ViewBorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.proGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.proGrid_PropertyValueChanged);
@@ -521,21 +522,16 @@ namespace Paint.Views
             // 
             // pnPaint
             // 
-            this.pnPaint.AutoScroll = true;
-            this.pnPaint.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pnPaint.ContextMenuStrip = this.mnuContext;
             this.pnPaint.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnPaint.Location = new System.Drawing.Point(0, 0);
             this.pnPaint.Name = "pnPaint";
             this.pnPaint.Size = new System.Drawing.Size(524, 374);
             this.pnPaint.TabIndex = 0;
+            this.pnPaint.TabStop = false;
             this.pnPaint.Paint += new System.Windows.Forms.PaintEventHandler(this.pnPaint_Paint);
             this.pnPaint.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnPaint_MouseDown);
-            this.pnPaint.MouseHover += new System.EventHandler(this.pnPaint_MouseHover);
             this.pnPaint.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnPaint_MouseMove);
             this.pnPaint.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnPaint_MouseUp);
-            this.pnPaint.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.pnPaint_PreviewKeyDown);
-            this.pnPaint.Resize += new System.EventHandler(this.pnPaint_Resize);
             // 
             // mnuContext
             // 
@@ -605,6 +601,7 @@ namespace Paint.Views
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pnPaint)).EndInit();
             this.mnuContext.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -615,7 +612,6 @@ namespace Paint.Views
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel pnPaint;
         private System.Windows.Forms.Button btnLine;
         private System.Windows.Forms.Panel pnRibbon;
         private System.Windows.Forms.Button btnColor;
@@ -667,6 +663,7 @@ namespace Paint.Views
         private System.Windows.Forms.ListBox lsbElement;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label lblCursorPosition;
+        private System.Windows.Forms.PictureBox pnPaint;
     }
 }
 

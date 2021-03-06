@@ -142,7 +142,13 @@ namespace Paint.DataClass
                     // rectang.FillDraw(graphics);
                     Text txtS = new Text(graphics, Start, Start.ToString(), Angle);
                     Text txtE = new Text(graphics, End, End.ToString(), Angle);
-                    Text txtL = new Text(graphics, Middle, $"Length={ this.Length};\nAngle ={Angle};\nWidth={this.Pen.Width}", Angle);
+                    Text txtL = new Text(graphics, Middle, $"Length={ this.Length};\nAngle ={Angle};\nWidth={this.Pen.Width};" +
+                        $"\n is intersect {IsIntersect(new Line(this.Pen, new Point(300, 500), new Point(2000, 600)))}", Angle);
+                    Rectang.DrawFromCenter(graphics,
+                        this.GetIntersectPoint(new Line(this.Pen, new Point(300, 500), new Point(2000, 600))),
+                        size, size);
+                    Text txtIntersect = new Text(graphics, this.GetIntersectPoint(new Line(this.Pen, new Point(300, 500), new Point(2000, 600))), $"\n is intersect {GetIntersectPoint(new Line(this.Pen, new Point(300, 500), new Point(2000, 600)))}", Angle);
+                    System.Windows.Forms.MessageBox.Show(IsIntersect(new Line(this.Pen, new Point(300, 500), new Point(2000, 600))).ToString());
                 }
                 else
                 {
@@ -200,6 +206,36 @@ namespace Paint.DataClass
             double x2 = Math.Pow(this.End.X - this.Start.X, 2);
             double y2 = Math.Pow(this.End.Y - this.Start.Y, 2);
             return (float)Math.Sqrt(x2 + y2);
+        }
+
+        /// <summary>
+        /// Line funcrion : y(x)= mx+b
+        /// </summary>
+        private void LineFunction(out double slope, out double b)
+        {
+            //Slope of line
+            double m = slope = (end.Y - start.Y) / (end.X - start.X);
+            b = start.Y - m * start.X;
+        }
+
+        internal bool IsIntersect(Line otherLine)
+        {
+            this.LineFunction(out double m1, out double _);
+            otherLine.LineFunction(out double m2, out double _);
+            return m1 != m2 ? true : false;
+        }
+
+        internal Point GetIntersectPoint(Line otherLine)
+        {
+            if (IsIntersect(otherLine))
+            {
+                this.LineFunction(out double m1, out double b1);
+                otherLine.LineFunction(out double m2, out double b2);
+                int x = (int)((b2 - b1) / (m1 - m2));
+                int y = (int)(m1 * x + b1);
+                return new Point(x, y);
+            }
+            else return new Point();
         }
     }
 }

@@ -146,7 +146,7 @@ namespace Paint.Views
                 pnPaint.Cursor = Cursors.SizeAll;
             }
 
-            // this.pnPaint.Invalidate();
+            this.pnPaint.Invalidate();
         }
 
         private void pnPaint_MouseMove(object sender, MouseEventArgs e)
@@ -160,6 +160,7 @@ namespace Paint.Views
                 {
                     pnPaint.Refresh();
                     graphics.DrawLine(pen, startPoint, endPoint);
+                    pnPaint.Invalidate();
                 }
                 else if (paintType == PaintType.FreeLine)
                 {
@@ -198,13 +199,13 @@ namespace Paint.Views
                     };
                     shapes.Add(line);
                 }
-                pnPaint.Refresh();
+                pnPaint.Invalidate();
             }
             else if (e.Button == MouseButtons.Middle)
             {
                 pnPaint.Cursor = Cursors.Default;
             }
-            // pnPaint.Invalidate();
+            pnPaint.Invalidate();
         }
 
         private void pnPaint_Resize(object sender, EventArgs e)
